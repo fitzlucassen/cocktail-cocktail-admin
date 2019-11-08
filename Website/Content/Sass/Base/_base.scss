@@ -1,0 +1,50 @@
+/* FONT FAMILY LINKAGE */
+@font-face {
+    font-family: 'Segoe UI';
+    src:    url('Font/Segoe/Segoe.eot');
+    src:    url('Font/Segoe/Segoe.eot?#iefix') format('embedded-opentype'),
+            url('Font/Segoe/Segoe.woff') format('woff'),
+            url('Font/Segoe/Segoe.ttf') format('truetype'),
+            url('Font/Segoe/Segoe.svg#Sri-TSCRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* UTILITIES CLASSES */
+.fLeft{float: left;display:block;}
+.fRight{float:right;display:block;}
+.tAlignCenter{text-align:center;}
+.cl{clear:both;display: block;}
+.vAlignCenter{vertical-align:middle;}
+
+/* LAYOUT */
+html, body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+}
+#global{
+    width: 100%;
+    overflow: auto;
+    height: 100%;
+}
+
+.title{
+    color: #111;
+    font-size: 22px;
+    font-family: 'Segoe UI';
+    font-weight: normal;
+}
+.subtitle{
+    color: #111;
+    font-size: 18px;
+    font-family: 'Segoe UI';
+    font-weight: normal;
+}
+
+.contenu{
+    color: #444;
+    font-size: 14px;
+    font-family: 'georgia';
+}
