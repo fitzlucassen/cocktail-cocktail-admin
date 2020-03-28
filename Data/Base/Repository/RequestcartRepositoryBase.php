@@ -10,7 +10,7 @@
 	use fitzlucassen\FLFramework\Data\Entity;
 	use fitzlucassen\FLFramework\Data\Base\Entity as EntityBase;
 
-	class RewrittingurlRepositoryBase  {
+	class RequestcartRepositoryBase  {
 		protected $_pdo;
 		protected $_lang;
 		protected $_pdoHelper;
@@ -28,12 +28,12 @@
 		 **************************/
 		public static function getAll($Connection) {
 			$qb = new Core\QueryBuilder(true);
-			$query = $qb->select()->from(array("rewrittingurl"))->getQuery();
+			$query = $qb->select()->from(array("requestcart"))->getQuery();
 			try {
 				$result = $Connection->selectTable($query);
 				$array = array();
 				foreach ($result as $object){
-					$o = new Entity\Rewrittingurl();
+					$o = new Entity\Requestcart();
 					$o->fillObject($object);
 					$array[] = $o;
 				}
@@ -46,11 +46,11 @@
 		}
 
 		public function getById($id) {
-			$query = $this->_queryBuilder->select()->from(array("rewrittingurl"))
+			$query = $this->_queryBuilder->select()->from(array("requestcart"))
 											->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id)))->getQuery();
 			try {
 				$properties = $this->_pdoHelper->select($query);
-				$object = new Entity\Rewrittingurl();
+				$object = new Entity\Requestcart();
 				$object->fillObject($properties);
 				return $object;
 			}
@@ -61,13 +61,13 @@
 		}
 
 		public function getBy($key, $value) {
-			$query = $this->_queryBuilder->select()->from(array("rewrittingurl"))
+			$query = $this->_queryBuilder->select()->from(array("requestcart"))
 											->where(array(array("link" => "", "left" => $key, "operator" => "=", "right" => $value)))->getQuery();
 			try {
 				$properties = $this->_pdoHelper->selectTable($query);
 				$array = array();
 				foreach ($properties as $object){
-					$o = new Entity\Rewrittingurl();
+					$o = new Entity\Requestcart();
 					$o->fillObject($object);
 					$array[] = $o;
 				}
@@ -80,7 +80,7 @@
 		}
 
 		public function delete($id) {
-			$query = $this->_queryBuilder->delete("rewrittingurl")
+			$query = $this->_queryBuilder->delete("requestcart")
 											->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))
 											->getQuery();
 			try {
@@ -93,7 +93,7 @@
 		}
 
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("rewrittingurl", array('idRouteUrl' => $properties["idRouteUrl"], 'urlMatched' => $properties["urlMatched"], 'lang' => $properties["lang"], ))->getQuery();
+			$query = $this->_queryBuilder->insert("requestcart", array('id_Request' => $properties["id_Request"], 'id_Menu' => $properties["id_Menu"], 'quantity' => $properties["quantity"], ))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
@@ -104,7 +104,7 @@
 		}
 
 		public function update($id, $properties) {
-			$query = $this->_queryBuilder->update("rewrittingurl", array('idRouteUrl' => $properties["idRouteUrl"], 'urlMatched' => $properties["urlMatched"], 'lang' => $properties["lang"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			$query = $this->_queryBuilder->update("requestcart", array('id_Request' => $properties["id_Request"], 'id_Menu' => $properties["id_Menu"], 'quantity' => $properties["quantity"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
