@@ -14,6 +14,12 @@ $(document).ready(function () {
                 $('#phoneNumber').html('<i class="material-icons" style="vertical-align: middle;">phone</i>&nbsp;&nbsp;' + data.devis.phoneNumber);
                 $('#fromCompany').html(data.devis.fromCompany);
                 $('#message').html(data.devis.message);
+                $('#downloadbutton').attr('href', "/devis/sendcommand/" + data.devis.id);
+
+                if(!data.devis.isCommand)
+                    $('#downloadbutton').hide();
+                else
+                    $('#downloadbutton').show();
 
                 if(data.devis.eventDate != null && data.devis.eventDate != "") {
                     $('#eventData').show();

@@ -23,9 +23,21 @@
 			$query = $this->_queryBuilder->insert("cocktailcocktailmenu", $array)->getQuery();
 
 			try {
+				$q = $this->_pdo->Query($query);
+				return $this->_pdo->lastInsertId();
+			}
+			catch(\PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
+
+		public function addFile($id, $filename){
+			$query = $this->_queryBuilder->update("cocktailcocktailmenu", array('image_url' => $filename))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			try {
 				return $this->_pdo->Query($query);
 			}
-			catch(PDOException $e){
+			catch(\PDOException $e){
 				print $e->getMessage();
 			}
 			return array();

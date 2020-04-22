@@ -16,4 +16,22 @@
 			parent::__construct($pdo, $lang);
 		}
 
+		public static function getAll($Connection) {
+			$qb = new Core\QueryBuilder(true);
+			$query = $qb->select()->from(array("request"))->orderBy(['creationDate DESC'])->getQuery();
+			try {
+				$result = $Connection->selectTable($query);
+				$array = array();
+				foreach ($result as $object){
+					$o = new Entity\Request();
+					$o->fillObject($object);
+					$array[] = $o;
+				}
+				return $array;
+			}
+			catch(PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
 	}

@@ -93,7 +93,7 @@
 		}
 
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("request", array('id_User' => $properties["id_User"], 'isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'fromCompany' => $properties["fromCompany"], 'message' => $properties["message"], 'eventDate' => $properties["eventDate"], 'eventTime' => $properties["eventTime"], 'people' => $properties["people"], 'creationDate' => $properties["creationDate"], ))->getQuery();
+			$query = $this->_queryBuilder->insert("request", array('id_User' => $properties["id_User"], 'isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'fromCompany' => $properties["fromCompany"], 'message' => $properties["message"], 'eventDate' => $properties["eventDate"], 'eventTime' => $properties["eventTime"], 'people' => $properties["people"], 'isCommand' => $properties["isCommand"], 'creationDate' => $properties["creationDate"], ))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
@@ -104,7 +104,7 @@
 		}
 
 		public function update($id, $properties) {
-			$query = $this->_queryBuilder->update("request", array('id_User' => $properties["id_User"], 'isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'fromCompany' => $properties["fromCompany"], 'message' => $properties["message"], 'eventDate' => $properties["eventDate"], 'eventTime' => $properties["eventTime"], 'people' => $properties["people"], 'creationDate' => $properties["creationDate"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			$query = $this->_queryBuilder->update("request", array('id_User' => $properties["id_User"], 'isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'fromCompany' => $properties["fromCompany"], 'message' => $properties["message"], 'eventDate' => $properties["eventDate"], 'eventTime' => $properties["eventTime"], 'people' => $properties["people"], 'isCommand' => $properties["isCommand"], 'creationDate' => $properties["creationDate"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}

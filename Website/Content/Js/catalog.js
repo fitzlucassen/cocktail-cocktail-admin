@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     service.getMealCategories(function (data) {
         autoComplete = {};
-        data.forEach(function(element){
+        data.forEach(function (element) {
             autoComplete[element.id + " - " + element.name + " - " + element.price] = null;
         });
         $('.autocomplete').autocomplete({
@@ -97,7 +97,11 @@ $(document).ready(function () {
         var menuCategory = $('#menuCategory').val();
         var menuId = $('#menuId').val();
 
+        var files = $('#file')[0].files;
+
         if (menuId != null && menuId != "") {
+            uploadFile(files, menuId);
+
             service.updateMenu(menuId, menuName, menuPrice, menuCategory, function (data) {
                 view.appendMenus(data, $('#second-column'));
                 view.emptyMenuFields();
@@ -106,13 +110,35 @@ $(document).ready(function () {
             });
         } else {
             service.addMenu(menuName, menuPrice, menuCategory, function (data) {
-                view.appendMenus(data, $('#second-column'));
+                uploadFile(files, data.id)
+                view.appendMenus(data.menus, $('#second-column'));
                 view.emptyMenuFields();
 
                 modal[0].close();
             });
         }
     });
+
+    function uploadFile(files, menuId) {
+        const formData = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+
+            formData.append('menuId', menuId);
+            formData.append('files[]', file);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/menu/cocktailcocktailupload",
+            contentType: false,
+            processData: false,
+            data: formData
+        }).done(function (data) {
+            console.log(data);
+        });
+    }
 
     $('#catalog-page #addMealButton').click(function () {
         var container = $('#third-column .collection');
@@ -127,7 +153,7 @@ $(document).ready(function () {
         if (mealId != null && mealId != "") {
             service.updateMeal(mealId, mealName, mealMenu, mealCategory, mealCategoryId, mealCategoryName, mealCategoryPrice, function (data) {
                 view.emptyMealFields();
-    
+
                 modal[1].close();
             });
         }
@@ -135,7 +161,7 @@ $(document).ready(function () {
             service.addMeal(mealName, mealMenu, mealCategory, mealCategoryId, mealCategoryName, mealCategoryPrice, function (data) {
                 view.appendMeals(data, $('#third-column'), true);
                 view.emptyMealFields();
-    
+
                 modal[1].close();
             });
         }
@@ -202,12 +228,14 @@ $(document).ready(function () {
         var element = $(this).parent();
         var id = element.attr('data-id');
         var price = element.attr('data-price');
+        var image = element.attr('data-image');
         var name = element.find(".title b").html();
 
         modal[0].open();
         $('#menuId').val(id)
         $('#menuPrice').val(price)
         $('#menuName').val(name);
+        $('#menuImage').attr('src', image);
 
         M.updateTextFields();
     });

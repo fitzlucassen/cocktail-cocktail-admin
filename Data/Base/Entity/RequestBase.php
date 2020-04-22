@@ -24,12 +24,13 @@
 		private $_eventDate;
 		private $_eventTime;
 		private $_people;
+		private $_isCommand;
 		private $_creationDate;
 		private $_queryBuilder;
 
-		public function __construct($id = '', $id_User = '', $isCompany = '', $companyName = '', $companySiret = '', $firstname = '', $lastname = '', $phoneNumber = '', $email = '', $fromCompany = '', $message = '', $eventDate = '', $eventTime = '', $people = '', $creationDate = ''){
+		public function __construct($id = '', $id_User = '', $isCompany = '', $companyName = '', $companySiret = '', $firstname = '', $lastname = '', $phoneNumber = '', $email = '', $fromCompany = '', $message = '', $eventDate = '', $eventTime = '', $people = '', $isCommand = '', $creationDate = ''){
 			$this->_queryBuilder = new Core\QueryBuilder(true);
-			$this->fillObject(array("id" => $id, "id_User" => $id_User, "isCompany" => $isCompany, "companyName" => $companyName, "companySiret" => $companySiret, "firstname" => $firstname, "lastname" => $lastname, "phoneNumber" => $phoneNumber, "email" => $email, "fromCompany" => $fromCompany, "message" => $message, "eventDate" => $eventDate, "eventTime" => $eventTime, "people" => $people, "creationDate" => $creationDate));
+			$this->fillObject(array("id" => $id, "id_User" => $id_User, "isCompany" => $isCompany, "companyName" => $companyName, "companySiret" => $companySiret, "firstname" => $firstname, "lastname" => $lastname, "phoneNumber" => $phoneNumber, "email" => $email, "fromCompany" => $fromCompany, "message" => $message, "eventDate" => $eventDate, "eventTime" => $eventTime, "people" => $people, "isCommand" => $isCommand, "creationDate" => $creationDate));
 		}
 
 		/***********
@@ -77,6 +78,9 @@
 		public function getPeople() {
 			return $this->_people;
 		}
+		public function getIsCommand() {
+			return $this->_isCommand;
+		}
 		public function getCreationDate() {
 			return $this->_creationDate;
 		}
@@ -113,6 +117,8 @@
 				$this->_eventTime = $properties["eventTime"];
 			if(!empty($properties["people"]))
 				$this->_people = $properties["people"];
+			if(!empty($properties["isCommand"]))
+				$this->_isCommand = $properties["isCommand"];
 			if(!empty($properties["creationDate"]))
 				$this->_creationDate = $properties["creationDate"];
 		}

@@ -13,12 +13,13 @@
 		private $_id;
 		private $_id_Request;
 		private $_id_Menu;
+		private $_id_Meal;
 		private $_quantity;
 		private $_queryBuilder;
 
-		public function __construct($id = '', $id_Request = '', $id_Menu = '', $quantity = ''){
+		public function __construct($id = '', $id_Request = '', $id_Menu = '', $id_Meal = '', $quantity = ''){
 			$this->_queryBuilder = new Core\QueryBuilder(true);
-			$this->fillObject(array("id" => $id, "id_Request" => $id_Request, "id_Menu" => $id_Menu, "quantity" => $quantity));
+			$this->fillObject(array("id" => $id, "id_Request" => $id_Request, "id_Menu" => $id_Menu, "id_Meal" => $id_Meal, "quantity" => $quantity));
 		}
 
 		/***********
@@ -32,6 +33,9 @@
 		}
 		public function getId_Menu() {
 			return $this->_id_Menu;
+		}
+		public function getId_Meal() {
+			return $this->_id_Meal;
 		}
 		public function getQuantity() {
 			return $this->_quantity;
@@ -47,6 +51,8 @@
 				$this->_id_Request = $properties["id_Request"];
 			if(!empty($properties["id_Menu"]))
 				$this->_id_Menu = $properties["id_Menu"];
+			if(!empty($properties["id_Meal"]))
+				$this->_id_Meal = $properties["id_Meal"];
 			if(!empty($properties["quantity"]))
 				$this->_quantity = $properties["quantity"];
 		}

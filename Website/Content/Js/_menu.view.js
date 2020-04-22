@@ -17,7 +17,7 @@ class MenuView {
     appendMenus(data, container) {
         var html = '';
         data.forEach(function (element) {
-            html += '<a href="#!" class="collection-item avatar category-menu" data-id="' + element.id + '" data-price="' + element.price + '" style="min-height: auto;"><span class="title"><b>' + element.name + '</b></span>' +
+            html += '<a href="#!" class="collection-item avatar category-menu" data-id="' + element.id + '" data-price="' + element.price + '" data-image="' + element.image_url + '" style="min-height: auto;"><span class="title"><b>' + element.name + '</b></span>' +
                 '<span class="secondary-content edit-menu" style="top:10px;right:50px;"><i class="material-icons">edit</i></span>' +
                 '<span class="secondary-content delete-menu" style="top:10px;"><i class="material-icons">delete</i></span>' +
                 '</a>';
@@ -82,6 +82,8 @@ class MenuView {
         $('#menuName').val("");
         $('#menuPrice').val("");
         $('#menuId').val("");
+        $('#menuImage').attr("src", "");
+        $('#file').val("");
     }
     emptyMealFields() {
         $('#mealId').val("");

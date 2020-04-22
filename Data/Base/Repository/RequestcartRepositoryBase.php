@@ -93,7 +93,7 @@
 		}
 
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("requestcart", array('id_Request' => $properties["id_Request"], 'id_Menu' => $properties["id_Menu"], 'quantity' => $properties["quantity"], ))->getQuery();
+			$query = $this->_queryBuilder->insert("requestcart", array('id_Request' => $properties["id_Request"], 'id_Menu' => $properties["id_Menu"], 'id_Meal' => $properties["id_Meal"], 'quantity' => $properties["quantity"], ))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
@@ -104,7 +104,7 @@
 		}
 
 		public function update($id, $properties) {
-			$query = $this->_queryBuilder->update("requestcart", array('id_Request' => $properties["id_Request"], 'id_Menu' => $properties["id_Menu"], 'quantity' => $properties["quantity"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			$query = $this->_queryBuilder->update("requestcart", array('id_Request' => $properties["id_Request"], 'id_Menu' => $properties["id_Menu"], 'id_Meal' => $properties["id_Meal"], 'quantity' => $properties["quantity"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}

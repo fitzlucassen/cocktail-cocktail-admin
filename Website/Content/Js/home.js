@@ -19,6 +19,11 @@ $(document).ready(function () {
         e.preventDefault();
         e.stopPropagation();
 
+        if($(this).prop('checked') && !confirm("êtes-vous sur de vouloir faire de ce client un client vérifié ? Ces devis deviendront automatiquement des commandes."))
+            return false;
+        else if(!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir faire de ce client un client normal ? Ces devis deviendront ne seront plus des commandes."))
+            return false;
+
         var element = $(this);
         $.ajax({
             method: "POST",

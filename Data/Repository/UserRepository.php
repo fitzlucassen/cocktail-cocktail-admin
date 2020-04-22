@@ -29,4 +29,67 @@
 			}
 			return array();
 		}
+
+		public function createPassword($id, $password) {
+			$query = $this->_queryBuilder->update("user", array('password' => $password))
+			->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => (int)$id )))
+			->getQuery();
+			try {
+				return $this->_pdo->Query($query);
+			}
+			catch(PDOException $e){
+				print $e->getMessage();
+			}
+		}
+		
+		public function update($id, $properties) {
+			$array = [
+				'isCompany' => $properties["isCompany"], 
+				'companyName' => $properties["companyName"], 
+				'companySiret' => $properties["companySiret"], 
+				'firstname' => $properties["firstname"], 
+				'lastname' => $properties["lastname"], 
+				'phoneNumber' => $properties["phoneNumber"], 
+				'email' => $properties["email"], 
+				'address' => $properties["address"], 
+				'city' => $properties["city"], 
+				'isActive' => $properties["isActive"], 
+				'fromCompany' => $properties["fromCompany"], 
+				'creationDate' => $properties["creationDate"]
+			];
+
+			if(isset($properties["password"]))
+				$array["password"] = $properties["password"];
+
+			$query = $this->_queryBuilder
+				->update("user", $array)
+				->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))
+				->getQuery();
+			try {
+				return $this->_pdo->Query($query);
+			}
+			catch(PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
+
+		public static function getAll($Connection) {
+			$qb = new Core\QueryBuilder(true);
+			$query = $qb->select()->from(array("user"))->orderBy(['creationDate DESC'])->getQuery();
+			try {
+				$result = $Connection->selectTable($query);
+				$array = array();
+				foreach ($result as $object){
+					$o = new Entity\User();
+					$o->fillObject($object);
+					$array[] = $o;
+				}
+				return $array;
+			}
+			catch(PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
 	}

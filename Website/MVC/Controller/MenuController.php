@@ -91,6 +91,7 @@ class MenuController extends Controller
 				"name" => $menu->getName(),
 				"price" => $menu->getPrice(),
 				"creationDate" => $menu->getCreationDate(),
+				"image_url" => $menu->getImage_url(),
 			));
 		}
 
@@ -124,7 +125,7 @@ class MenuController extends Controller
 		$this->setAction('index');
 		$this->_view->view($Model, 'json');
 	}
-	
+
 	public function CocktailCocktailGetMealCategories()
 	{
 		$subcategories = Repository\CocktailcocktailmealcategoryRepository::getAll($this->_repositoryManager->getConnection());
@@ -260,20 +261,24 @@ class MenuController extends Controller
 
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
 			$data["id_Category"] = (int) $data["id_Category"];
-			$data["price"] = (double) $data["price"];
+			$data["price"] = (float) $data["price"];
 
-			$menuRepository->add($data);
+			$id = $menuRepository->add($data);
 			$menus = $menuRepository->getBy('id_Category', $data["id_Category"]);
 
 			// Process request...
-			$Model->result = array();
+			$Model->result = [
+				"menus" => [],
+				"id" => $id
+			];
 
 			foreach ($menus as $menu) {
-				array_push($Model->result, array(
+				array_push($Model->result['menus'], array(
 					"id" => $menu->getId(),
 					"name" => $menu->getName(),
 					"creationDate" => $menu->getCreationDate(),
-					"price" => $menu->getPrice()
+					"price" => $menu->getPrice(),
+					"image_url" => $menu->getImage_url()
 				));
 			}
 		}
@@ -300,21 +305,21 @@ class MenuController extends Controller
 
 			// Add or update meal category if there is
 			$idMealCategory = null;
-			if(!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryName"]) && !Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryPrice"])) {
+			if (!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryName"]) && !Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryPrice"])) {
 				$mealCategory = array(
 					"name" => $data["mealCategoryName"],
 					"price" => $data["mealCategoryPrice"],
 				);
 
-				if(!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryId"]))
-					$mealCategoryRepository->update((int)$data["mealCategoryId"], $mealCategory);
-				else 
+				if (!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryId"]))
+					$mealCategoryRepository->update((int) $data["mealCategoryId"], $mealCategory);
+				else
 					$idMealCategory = $mealCategoryRepository->add($mealCategory);
 			}
 
 			// Then add the meal itself
-			if(isset($idMealCategory) && !empty($idMealCategory))
-				$data["id_MealCategory"] = (int)$idMealCategory;
+			if (isset($idMealCategory) && !empty($idMealCategory))
+				$data["id_MealCategory"] = (int) $idMealCategory;
 			else
 				$data["id_MealCategory"] = null;
 
@@ -323,7 +328,7 @@ class MenuController extends Controller
 			$data["category"] = $subcategoryRepository->getById($data["id_Subcategory"])->getName();
 
 			$added = $mealRepository->add($data);
-			
+
 			// And finaly link the meal to the menu
 			$data["id_Meal"] = (int) $added;
 			$data["id_Menu"] = (int) $data["id_Menu"];
@@ -356,7 +361,7 @@ class MenuController extends Controller
 			$data["category"] = $categoryRepository->getById($data["id_Category"])->getName();
 
 			$mealRepository->add($data);
-			
+
 			$Model->result = $data;
 		}
 
@@ -368,7 +373,8 @@ class MenuController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
-	public function DeleteCategory() {
+	public function DeleteCategory()
+	{
 		$Model = new Model\WebserviceModel($this->_repositoryManager);
 
 		if (Core\Request::isPost() || Core\Request::isPost()) {
@@ -376,7 +382,7 @@ class MenuController extends Controller
 
 			$categoryRepository = $this->_repositoryManager->get('Cocktailcocktailcategories');
 
-			$categoryRepository->delete((int)$data["id_Category"]);
+			$categoryRepository->delete((int) $data["id_Category"]);
 
 			// Process request...
 			$Model->result = array();
@@ -390,7 +396,8 @@ class MenuController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
-	public function DeleteLesTerrassesCategory() {
+	public function DeleteLesTerrassesCategory()
+	{
 		$Model = new Model\WebserviceModel($this->_repositoryManager);
 
 		if (Core\Request::isPost() || Core\Request::isPost()) {
@@ -398,7 +405,7 @@ class MenuController extends Controller
 
 			$categoryRepository = $this->_repositoryManager->get('Lesterrassescategories');
 
-			$categoryRepository->delete((int)$data["id_Category"]);
+			$categoryRepository->delete((int) $data["id_Category"]);
 
 			// Process request...
 			$Model->result = array();
@@ -411,8 +418,9 @@ class MenuController extends Controller
 		$this->setAction('index');
 		$this->_view->view($Model, 'json');
 	}
-	
-	public function DeleteMenu() {
+
+	public function DeleteMenu()
+	{
 		$Model = new Model\WebserviceModel($this->_repositoryManager);
 
 		if (Core\Request::isPost() || Core\Request::isPost()) {
@@ -420,7 +428,7 @@ class MenuController extends Controller
 
 			$menuRepository = $this->_repositoryManager->get('Cocktailcocktailmenu');
 
-			$menuRepository->delete((int)$data["id_Menu"]);
+			$menuRepository->delete((int) $data["id_Menu"]);
 
 			// Process request...
 			$Model->result = array();
@@ -434,7 +442,8 @@ class MenuController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
-	public function DeleteMeal() {
+	public function DeleteMeal()
+	{
 		$Model = new Model\WebserviceModel($this->_repositoryManager);
 
 		if (Core\Request::isPost() || Core\Request::isPost()) {
@@ -442,7 +451,7 @@ class MenuController extends Controller
 
 			$mealRepository = $this->_repositoryManager->get('Cocktailcocktailmeal');
 
-			$mealRepository->delete((int)$data["id_Meal"]);
+			$mealRepository->delete((int) $data["id_Meal"]);
 
 			// Process request...
 			$Model->result = array();
@@ -456,7 +465,8 @@ class MenuController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
-	public function DeleteLesTerrassesMeal() {
+	public function DeleteLesTerrassesMeal()
+	{
 		$Model = new Model\WebserviceModel($this->_repositoryManager);
 
 		if (Core\Request::isPost() || Core\Request::isPost()) {
@@ -464,7 +474,7 @@ class MenuController extends Controller
 
 			$mealRepository = $this->_repositoryManager->get('Lesterrassesmeal');
 
-			$mealRepository->delete((int)$data["id_Meal"]);
+			$mealRepository->delete((int) $data["id_Meal"]);
 
 			// Process request...
 			$Model->result = array();
@@ -490,7 +500,7 @@ class MenuController extends Controller
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
 			$data["id"] = (int) $data["id"];
 			$data["id_Category"] = (int) $data["id_Category"];
-			$data["price"] = (double) $data["price"];
+			$data["price"] = (float) $data["price"];
 
 			$menuRepository->update($data["id"], $data);
 			$menus = $menuRepository->getBy('id_Category', $data["id_Category"]);
@@ -529,28 +539,28 @@ class MenuController extends Controller
 			$subcategoryRepository = $this->_repositoryManager->get('Cocktailcocktailsubcategories');
 
 			// Add or update meal category if there is
-			$idMealCategory = (int)$data["mealCategoryId"];
-			if(!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryName"]) && !Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryPrice"])) {
+			$idMealCategory = (int) $data["mealCategoryId"];
+			if (!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryName"]) && !Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryPrice"])) {
 				$mealCategory = array(
 					"name" => $data["mealCategoryName"],
 					"price" => $data["mealCategoryPrice"],
 				);
 
-				if(!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryId"]))
-					$mealCategoryRepository->update((int)$data["mealCategoryId"], $mealCategory);
-				else 
+				if (!Adapter\StringAdapter::isNullOrEmpty($data["mealCategoryId"]))
+					$mealCategoryRepository->update((int) $data["mealCategoryId"], $mealCategory);
+				else
 					$idMealCategory = $mealCategoryRepository->add($mealCategory);
 			}
 
 			// Then update the meal itself
-			$data["id_MealCategory"] = (int)$idMealCategory;
+			$data["id_MealCategory"] = (int) $idMealCategory;
 
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
 			$data["id_Subcategory"] = (int) $data["id_Subcategory"];
 			$data["category"] = $subcategoryRepository->getById($data["id_Subcategory"])->getName();
 
-			$mealRepository->update((int)$data["id"], $data);
-			
+			$mealRepository->update((int) $data["id"], $data);
+
 			$Model->result = $data;
 		}
 
@@ -574,8 +584,8 @@ class MenuController extends Controller
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
 			$data["id_Category"] = (int) $data["id_Category"];
 
-			$mealRepository->update((int)$data["id"], $data);
-			
+			$mealRepository->update((int) $data["id"], $data);
+
 			$Model->result = $data;
 		}
 
@@ -585,5 +595,27 @@ class MenuController extends Controller
 		$this->setController('webservice');
 		$this->setAction('index');
 		$this->_view->view($Model, 'json');
+	}
+
+	public function CocktailCocktailUpload()
+	{
+		$name = "";
+
+		if (Core\Request::isFile()) {
+			// Initialize the upload helper with the upload directory path
+			$Upload = new Helper\Upload("upload_test");
+			// Give the file and then upload
+			$Upload->file($_FILES["files"]);
+			$Upload->upload();
+
+			$name = $_FILES["files"]["name"][0];
+		}
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+
+			$menuRepository = $this->_repositoryManager->get('Cocktailcocktailmenu');
+			$menuRepository->addFile($data['menuId'], "/upload_test/" . $name);
+			echo "/upload_test/" . $name;
+		}
 	}
 }

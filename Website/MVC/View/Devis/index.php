@@ -23,21 +23,21 @@ $this->beginSection();
             <div class="collection">
                 <?php
                 foreach ($this->Model->_devis as $devis) {
-                    $message = $devis->getMessage();
+                    $message = $devis["message"];
                     $length = strlen($message);
                     ?>
-                    <a href="#!" class="collection-item avatar valign-wrapper" data-id="<?php echo $devis->getId(); ?>">
+                    <a href="#!" class="collection-item avatar valign-wrapper" data-id="<?php echo $devis["id"]; ?>">
                         <i class="material-icons circle">folder</i>
                         <span class="title">
                             <b>
-                                <?php echo $devis->getIsCompany() ? $devis->getCompanyName() : $devis->getFirstname() . " " . $devis->getLastName(); ?>
+                                <?php echo $devis["isCompany"] ? $devis["companyName"] : $devis["firstname"] . " " . $devis["lastname"]; ?>
                             </b>
-                            <span class="new badge" data-badge-caption=""><?php echo $devis->getFromCompany(); ?></span>
+                            <span class="new badge" data-badge-caption=""><?php echo $devis["fromCompany"]; ?></span>
                         </span>
                         <p style="color:black;">
                             reçu le
                             <b>
-                                <?php echo $devis->getCreationDate(); ?>
+                                <?php echo $devis["creationDate"]; ?>
                             </b><br />
                             <span><?php echo ($length > 100 ? substr($message, 0, 100) . '...' : $message); ?></span>
                         </p>
@@ -48,12 +48,6 @@ $this->beginSection();
             </div>
         </div>
         <div class="col m2"></div>
-    </div>
-
-    <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red pulse modal-trigger" href="#modal1" id="openModal">
-            <i class="large material-icons">add</i>
-        </a>
     </div>
 
     <!-- Modal Structure -->
@@ -81,6 +75,11 @@ $this->beginSection();
                 <p class="col s6 center-align" id="phoneNumber"></p>
                 <p class="col s6 center-align" id="email"></p>
             </div>
+            <br/>
+            <br/>
+            <p style="text-align: center">
+                <a class="waves-effect waves-light btn-large" target="_blank" href="" id="downloadbutton"><i class="material-icons left">arrow_downward</i>Voir le bon de commande</a>
+            </p>
         </div>
     </div>
 </div>

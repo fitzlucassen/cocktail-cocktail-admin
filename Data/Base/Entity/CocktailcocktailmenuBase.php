@@ -14,12 +14,13 @@
 		private $_id_Category;
 		private $_name;
 		private $_price;
+		private $_image_url;
 		private $_creationDate;
 		private $_queryBuilder;
 
-		public function __construct($id = '', $id_Category = '', $name = '', $price = '', $creationDate = ''){
+		public function __construct($id = '', $id_Category = '', $name = '', $price = '', $image_url = '', $creationDate = ''){
 			$this->_queryBuilder = new Core\QueryBuilder(true);
-			$this->fillObject(array("id" => $id, "id_Category" => $id_Category, "name" => $name, "price" => $price, "creationDate" => $creationDate));
+			$this->fillObject(array("id" => $id, "id_Category" => $id_Category, "name" => $name, "price" => $price, "image_url" => $image_url, "creationDate" => $creationDate));
 		}
 
 		/***********
@@ -37,6 +38,9 @@
 		public function getPrice() {
 			return $this->_price;
 		}
+		public function getImage_url() {
+			return $this->_image_url;
+		}
 		public function getCreationDate() {
 			return $this->_creationDate;
 		}
@@ -53,6 +57,8 @@
 				$this->_name = $properties["name"];
 			if(!empty($properties["price"]))
 				$this->_price = $properties["price"];
+			if(!empty($properties["image_url"]))
+				$this->_image_url = $properties["image_url"];
 			if(!empty($properties["creationDate"]))
 				$this->_creationDate = $properties["creationDate"];
 		}

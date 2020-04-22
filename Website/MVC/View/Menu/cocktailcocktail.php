@@ -25,7 +25,7 @@ $this->beginSection();
                 <div class="collection">
                     <?php
                     foreach ($this->Model->_categories as $category) {
-                        ?>
+                    ?>
                         <a href="#!" class="collection-item avatar category valign-wrapper" data-id="<?php echo $category->getId(); ?>" style="min-height: auto;">
                             <span class="title">
                                 <b>
@@ -67,6 +67,16 @@ $this->beginSection();
                             <input id="menuPrice" name="menuPrice" type="number" class="validate">
                             <label for="menuPrice">Prix HT</label>
                         </div>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Photo du menu</span>
+                                <input type="file" id="file" name="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Illustrez le menu par une photo">
+                            </div>
+                        </div>
+                        <img src="" alt="" id="menuImage" style="display: block; width: 50%;margin:20px auto;"/>
                     </div>
 
                     <input type="hidden" name="menuCategory" id="menuCategory" value="" />

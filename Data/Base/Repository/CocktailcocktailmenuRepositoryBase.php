@@ -93,7 +93,7 @@
 		}
 
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("cocktailcocktailmenu", array('id_Category' => $properties["id_Category"], 'name' => $properties["name"], 'price' => $properties["price"], 'creationDate' => $properties["creationDate"], ))->getQuery();
+			$query = $this->_queryBuilder->insert("cocktailcocktailmenu", array('id_Category' => $properties["id_Category"], 'name' => $properties["name"], 'price' => $properties["price"], 'image_url' => $properties["image_url"], 'creationDate' => $properties["creationDate"], ))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
@@ -104,7 +104,7 @@
 		}
 
 		public function update($id, $properties) {
-			$query = $this->_queryBuilder->update("cocktailcocktailmenu", array('id_Category' => $properties["id_Category"], 'name' => $properties["name"], 'price' => $properties["price"], 'creationDate' => $properties["creationDate"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			$query = $this->_queryBuilder->update("cocktailcocktailmenu", array('id_Category' => $properties["id_Category"], 'name' => $properties["name"], 'price' => $properties["price"], 'image_url' => $properties["image_url"], 'creationDate' => $properties["creationDate"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}

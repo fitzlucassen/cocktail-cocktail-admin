@@ -65,10 +65,33 @@ class ClientController extends Controller
 			$data = Core\Request::cleanRequest();
 			
 			$userRepository = $this->_repositoryManager->get('User');
-
+			$user = $userRepository->getById($data["id"]);
 			$isActive = $data["isActive"] == "false" ? 0 : 1;
 
 			$userRepository->activate($data["id"], $isActive);
+
+			if($isActive) {
+				$password = $this->GenerateRandomString();
+				$userRepository->createPassword($data["id"], $password);
+
+				$Email = new Helper\Email();
+	
+				// On configure l'email
+				$Email->from("contact@cocktailcocktail.fr")
+						->to($user->getEmail())
+						->subject($user->getFromcompany() . " vous crée un compte client")
+						->fromName($user->getFromcompany())
+						->layout("email")
+						->view("default")
+						->vars(array(
+							"company" => $user->getFromcompany(),
+							"email" => $user->getEmail(),
+							"password" => $password
+						));
+	
+				// Puis on construit le header et on l'envoi
+				$Email->buildHeaders()->send();
+			}
 		}
 
 		$Model = new Model\WebserviceModel($this->_repositoryManager);
@@ -145,5 +168,15 @@ class ClientController extends Controller
 		}
 
 		Core\Request::redirectTo("/client");
+	}
+
+	private function GenerateRandomString($length = 10) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
 	}
 }
