@@ -19,6 +19,6 @@
 	});
 </script>
 <?php
-if (isset($this->Sections['scripts']))
+if(isset($this->Sections['scripts']))
 	$this->render($this->Sections['scripts']);
 ?>

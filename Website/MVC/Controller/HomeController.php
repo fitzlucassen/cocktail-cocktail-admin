@@ -12,7 +12,6 @@ use fitzlucassen\FLFramework\Library\Core;
 		Class : HomeController
 		Déscription : Permet de gérer les actions en relation avec le groupe de page Home
 	*/
-
 class HomeController extends Controller
 {
 	public function __construct($action, $manager)
