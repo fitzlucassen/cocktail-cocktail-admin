@@ -67,6 +67,8 @@ class DevisController extends Controller
 			"people" => $request->getPeople(),
 			"isCommand" => $request->getIscommand(),
 			"creationDate" => $request->getCreationdate(),
+			"zone" => $request->getZone(),
+			"zipcode" => $request->getEventzipcode(),
 			"cart" => []
 		];
 		
@@ -74,6 +76,10 @@ class DevisController extends Controller
 		$requestCart = $requestCartRepository->getBy("id_Request", $request->getId());
 
 		if(isset($requestCart) && is_array($requestCart) && count($requestCart) > 0) {
+			$price = 0;
+			$quantity = 0;
+			$requestZone = $request->getZone();
+
 			// Get Menu Info
 			foreach ($requestCart as $key => $menuMeal) {
 				$idMenu = $menuMeal->getId_menu();
@@ -101,7 +107,19 @@ class DevisController extends Controller
 					"quantity" => $menuMeal->getQuantity()
 				]);
 			}
+
+			if(isset($requestZone) && !empty($requestZone)){
+				$quantity = $request->getPeople();
+				if($quantity > 7){
+					$price = ($requestZone == 1 ? 0 : ($requestZone == 2 ? 15 : -1));
+				}
+				else {
+					$price = ($requestZone == 1 ? 20 : ($requestZone == 2 ? 30 : -1));
+				}
+			}
+
 			$currentDevis["isCommand"] = true;
+			$currentDevis["fees"] = $price;
 		}
 		if(isset($userId) && !empty($userId)){
 			$user = $userRepository->getById($userId);

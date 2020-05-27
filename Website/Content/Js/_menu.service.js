@@ -102,6 +102,22 @@ class MenuService {
         })
             .always(function () { });
     }
+    addZipcode(zipcode, zone, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: "/home/addZipcode",
+            dataType: "json",
+            data: {
+                zipcode: zipcode,
+                zone: zone
+            }
+        }).done(function (data) {
+            successCallback(data);
+        }).fail(function () {
+            alert('Something wrong happened... try later');
+        })
+            .always(function () { });
+    }
     addMeal(mealName, mealMenu, mealCategory, mealCategoryId, mealCategoryName, mealCategoryPrice, successCallback) {
         $.ajax({
             method: "POST",
@@ -147,6 +163,21 @@ class MenuService {
             dataType: "json",
             data: {
                 id_Category: idCategory
+            }
+        }).done(function (data) {
+            successCallback(data);
+        }).fail(function () {
+            alert('Something wrong happened... try later');
+        })
+            .always(function () { });
+    }  
+    deleteZipcode(idZipcode, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: "/home/deleteZipcode",
+            dataType: "json",
+            data: {
+                id: idZipcode
             }
         }).done(function (data) {
             successCallback(data);

@@ -15,6 +15,7 @@
         <a href="/" class="brand-logo">Cocktail Cocktail</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
+            <li class="<?php echo $action == "zipcode" ? "active" : "" ?>"><a href="/home/zipcode">Zones</a></li>
             <li class="<?php echo $controller == "client" ? "active" : "" ?>"><a href="/client">Clients</a></li>
             <li class="<?php echo $controller == "devis" ? "active" : "" ?>"><a href="/devis">Devis</a></li>
             <li class="<?php echo $action == "cocktailcocktail" ? "active" : "" ?>"><a href="/menu/cocktailcocktail">Catalogue</a></li>
@@ -24,6 +25,7 @@
 </nav>
 
 <ul class="sidenav" id="mobile-demo">
+    <li><a href="/home/zipcode">Zones</a></li>
     <li><a href="/client">Clients</a></li>
     <li><a href="/devis">Devis</a></li>
     <li><a href="/menu/cocktailcocktail">Catalogue</a></li>

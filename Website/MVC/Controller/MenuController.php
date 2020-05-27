@@ -92,6 +92,7 @@ class MenuController extends Controller
 				"price" => $menu->getPrice(),
 				"creationDate" => $menu->getCreationDate(),
 				"image_url" => $menu->getImage_url(),
+				"active" => $menu->getActive()
 			));
 		}
 
@@ -176,7 +177,8 @@ class MenuController extends Controller
 				"description" => $mealArray->getDescription(),
 				"mealCategoryName" => $mealCategory->getName(),
 				"mealCategoryPrice" => $mealCategory->getPrice(),
-				"mealCategoryId" => $mealCategory->getId()
+				"mealCategoryId" => $mealCategory->getId(),
+				"active" => $mealArray->getActive()
 			));
 		}
 
@@ -595,6 +597,44 @@ class MenuController extends Controller
 		$this->setController('webservice');
 		$this->setAction('index');
 		$this->_view->view($Model, 'json');
+	}
+
+	public function Activate(){
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+			
+			$menuRepository = $this->_repositoryManager->get('cocktailcocktailmenu');
+			$menu = $menuRepository->getById($data["id"]);
+			$isActive = $data["isActive"] == "false" ? 0 : 1;
+
+			$menuRepository->activate($data["id"], $isActive);
+
+			$Model = new Model\WebserviceModel($this->_repositoryManager);
+			$Model->result = "{}";
+			$this->setLayout('json');
+			$this->setController('webservice');
+			$this->setAction('index');
+			$this->_view->view($Model, 'json');
+		}
+	}
+
+	public function MealActivate(){
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+			
+			$mealRepository = $this->_repositoryManager->get('cocktailcocktailmeal');
+			$meal = $mealRepository->getById($data["id"]);
+			$isActive = $data["isActive"] == "false" ? 0 : 1;
+
+			$mealRepository->activate($data["id"], $isActive);
+
+			$Model = new Model\WebserviceModel($this->_repositoryManager);
+			$Model->result = "{}";
+			$this->setLayout('json');
+			$this->setController('webservice');
+			$this->setAction('index');
+			$this->_view->view($Model, 'json');
+		}
 	}
 
 	public function CocktailCocktailUpload()

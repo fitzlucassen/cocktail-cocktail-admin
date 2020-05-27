@@ -67,8 +67,9 @@ $this->beginSection();
             
             <div class="row" id="eventData">
                 <p class="s12"><b>Données de l'évenement :</b></p>
-                <p class="col s6 center-align" id="eventDate"></p>
-                <p class="col s6 center-align" id="people"></p>
+                <p class="col s4 center-align" id="eventDate"></p>
+                <p class="col s4 center-align" id="people"></p>
+                <p class="col s4 center-align" id="eventZipcodeZone"></p>
             </div>
             <div class="row" style="margin-bottom: 0;">
                 <p class="s12"><b>Pour contacter ce client :</b></p>

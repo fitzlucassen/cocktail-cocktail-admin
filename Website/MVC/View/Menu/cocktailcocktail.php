@@ -67,7 +67,9 @@ $this->beginSection();
                             <input id="menuPrice" name="menuPrice" type="number" class="validate">
                             <label for="menuPrice">Prix HT</label>
                         </div>
-                        <div class="file-field input-field">
+                    </div>
+                    <div class="row">
+                        <div class="file-field input-field col s12">
                             <div class="btn">
                                 <span>Photo du menu</span>
                                 <input type="file" id="file" name="file">

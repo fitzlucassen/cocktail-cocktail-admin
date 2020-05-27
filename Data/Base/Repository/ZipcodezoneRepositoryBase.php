@@ -10,7 +10,7 @@
 	use fitzlucassen\FLFramework\Data\Entity;
 	use fitzlucassen\FLFramework\Data\Base\Entity as EntityBase;
 
-	class CocktailcocktailmealRepositoryBase  {
+	class ZipcodezoneRepositoryBase  {
 		protected $_pdo;
 		protected $_lang;
 		protected $_pdoHelper;
@@ -28,12 +28,12 @@
 		 **************************/
 		public static function getAll($Connection) {
 			$qb = new Core\QueryBuilder(true);
-			$query = $qb->select()->from(array("cocktailcocktailmeal"))->getQuery();
+			$query = $qb->select()->from(array("zipcodezone"))->getQuery();
 			try {
 				$result = $Connection->selectTable($query);
 				$array = array();
 				foreach ($result as $object){
-					$o = new Entity\Cocktailcocktailmeal();
+					$o = new Entity\Zipcodezone();
 					$o->fillObject($object);
 					$array[] = $o;
 				}
@@ -46,11 +46,11 @@
 		}
 
 		public function getById($id) {
-			$query = $this->_queryBuilder->select()->from(array("cocktailcocktailmeal"))
+			$query = $this->_queryBuilder->select()->from(array("zipcodezone"))
 											->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id)))->getQuery();
 			try {
 				$properties = $this->_pdoHelper->select($query);
-				$object = new Entity\Cocktailcocktailmeal();
+				$object = new Entity\Zipcodezone();
 				$object->fillObject($properties);
 				return $object;
 			}
@@ -61,13 +61,13 @@
 		}
 
 		public function getBy($key, $value) {
-			$query = $this->_queryBuilder->select()->from(array("cocktailcocktailmeal"))
+			$query = $this->_queryBuilder->select()->from(array("zipcodezone"))
 											->where(array(array("link" => "", "left" => $key, "operator" => "=", "right" => $value)))->getQuery();
 			try {
 				$properties = $this->_pdoHelper->selectTable($query);
 				$array = array();
 				foreach ($properties as $object){
-					$o = new Entity\Cocktailcocktailmeal();
+					$o = new Entity\Zipcodezone();
 					$o->fillObject($object);
 					$array[] = $o;
 				}
@@ -80,7 +80,7 @@
 		}
 
 		public function delete($id) {
-			$query = $this->_queryBuilder->delete("cocktailcocktailmeal")
+			$query = $this->_queryBuilder->delete("zipcodezone")
 											->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))
 											->getQuery();
 			try {
@@ -93,7 +93,7 @@
 		}
 
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("cocktailcocktailmeal", array('id_Subcategory' => $properties["id_Subcategory"], 'id_MealCategory' => $properties["id_MealCategory"], 'description' => $properties["description"], 'active' => $properties["active"], ))->getQuery();
+			$query = $this->_queryBuilder->insert("zipcodezone", array('zipcode' => $properties["zipcode"], 'zone' => $properties["zone"], ))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
@@ -104,7 +104,7 @@
 		}
 
 		public function update($id, $properties) {
-			$query = $this->_queryBuilder->update("cocktailcocktailmeal", array('id_Subcategory' => $properties["id_Subcategory"], 'id_MealCategory' => $properties["id_MealCategory"], 'description' => $properties["description"], 'active' => $properties["active"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			$query = $this->_queryBuilder->update("zipcodezone", array('zipcode' => $properties["zipcode"], 'zone' => $properties["zone"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}

@@ -1,10 +1,10 @@
-AuthUserFile /srv/data/web/vhosts/admincocktail.thibaultdulon.com/.htpasswd
-AuthType Basic
-AuthName "Login Details"
+#AuthUserFile /srv/data/web/vhosts/admincocktail.thibaultdulon.com/.htpasswd
+#AuthType Basic
+#AuthName "Login Details"
 
-<limit GET POST>
-require valid-user
-</limit>
+#<limit GET POST>
+#require valid-user
+#</limit>
 
 Options -Indexes
 Options -Multiviews

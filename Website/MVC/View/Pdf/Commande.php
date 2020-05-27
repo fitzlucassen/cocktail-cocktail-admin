@@ -101,6 +101,12 @@
                 <td></td>
                 <td></td>
             </tr> -->
+
+            <tr>
+                <td colspan="2" class="no-border"></td>
+                <td style="text-align: center;"><strong>Livraison:</strong></td>
+                <td><?php echo ($this->Model["fees"] == 0 ? "Offert" : ($this->Model["fees"] > 0 ? $this->Model["fees"]." €" : "à consulter")); ?></td>
+            </tr>
  
             <tr>
                 <td colspan="2" class="no-border"></td>

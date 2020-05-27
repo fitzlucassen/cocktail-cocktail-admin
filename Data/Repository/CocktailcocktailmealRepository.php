@@ -31,4 +31,19 @@
 			}
 			return array();
 		}
+
+		
+		public function activate($id, $active) {
+			$query = $this->_queryBuilder
+				->update("cocktailcocktailmeal", array('active' => $active))
+				->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => (int)$id )))
+				->getQuery();
+			try {
+				return $this->_pdo->Query($query);
+			}
+			catch(\PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
 	}

@@ -269,6 +269,55 @@ $(document).ready(function () {
         M.updateTextFields();
     });
 
+    $('#catalog-page .col').on('click', '.category-menu .activate', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if($(this).prop('checked') && !confirm("êtes-vous sur de vouloir ré-activer ce menu ?"))
+            return false;
+        else if(!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir désactiver ce menu ?"))
+            return false;
+
+        var element = $(this);
+        $.ajax({
+            method: "POST",
+            url: "/menu/activate",
+            dataType: "json",
+            data: {
+                id: $(this).parent().parent().parent().attr('data-id'),
+                isActive: $(this).prop('checked')
+            }
+        }).done(function () {
+            element.prop('checked', !element.prop('checked'));
+        }).fail(function () {
+            alert('Something wrong happened... try later');
+        }).always(function () { });
+    });
+    
+    $('#catalog-page .col').on('click', '.meal-menu .activate', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if($(this).prop('checked') && !confirm("êtes-vous sur de vouloir ré-activer ce plat ?"))
+            return false;
+        else if(!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir désactiver ce plat ?"))
+            return false;
+
+        var element = $(this);
+        $.ajax({
+            method: "POST",
+            url: "/menu/mealactivate",
+            dataType: "json",
+            data: {
+                id: $(this).parent().parent().parent().attr('data-id'),
+                isActive: $(this).prop('checked')
+            }
+        }).done(function () {
+            element.prop('checked', !element.prop('checked'));
+        }).fail(function () {
+            alert('Something wrong happened... try later');
+        }).always(function () { });
+    });
     function splitMealCategoryName(element) {
         var tokens = element.split(' - ');
 

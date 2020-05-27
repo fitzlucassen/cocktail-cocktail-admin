@@ -17,7 +17,7 @@ $this->beginSection();
 ?>
 <div class="page" id="home-page">
 	<h1 class="center-align">Bienvenue sur votre panel d'administration.</h1>
-	<div class="row">
+	<div class="row" style="padding: 2% 10%;">
 		<div class="col s12 m6">
 			<div class="card">
 				<div class="card-image center-align">
@@ -25,7 +25,7 @@ $this->beginSection();
 					<a class="btn-floating btn-large halfway-fab waves-effect waves-light red" href="/client"><i class="material-icons">add</i></a>
 				</div>
 				<div class="card-content">
-					<span class="card-title">Gérer les clients</span>
+					<span class="card-title">Gérer les <u>clients</u></span>
 					<p>Inscrire de nouveaux clients, consultez votre base de données, contacter un client, approuver ou non les nouveaux clients...etc.</p>
 				</div>
 			</div>
@@ -38,7 +38,7 @@ $this->beginSection();
 					<a class="btn-floating btn-large halfway-fab waves-effect waves-light red" href="/devis"><i class="material-icons">add</i></a>
 				</div>
 				<div class="card-content">
-					<span class="card-title">Gérer les devis</span>
+					<span class="card-title">Gérer les <u>devis</u></span>
 					<p>Revisez toutes vos demandes de devis, approuvez les ou rejettez les, consultez les détails des devis, générez...etc.</p>
 				</div>
 			</div>
@@ -51,7 +51,7 @@ $this->beginSection();
 					<a class="btn-floating btn-large halfway-fab waves-effect waves-light red" href="/menu/cocktailcocktail"><i class="material-icons">add</i></a>
 				</div>
 				<div class="card-content">
-					<span class="card-title">Gérer le catalogue Cocktail Cocktail</span>
+					<span class="card-title">Gérer le catalogue <u>Cocktail Cocktail</u></span>
 					<p>Gérer et compléter l'offre de Cocktail Cocktail en ajoutant ou supprimant des plats, des menus, des catégories...etc.</p>
 				</div>
 			</div>
@@ -64,7 +64,7 @@ $this->beginSection();
 					<a class="btn-floating btn-large halfway-fab waves-effect waves-light red" href="/menu/lesterrasses"><i class="material-icons">add</i></a>
 				</div>
 				<div class="card-content">
-					<span class="card-title">Gérer le menu des Terrasses de Courbevoie</span>
+					<span class="card-title">Gérer le menu des <u>Terrasses de Courbevoie</u></span>
 					<p>Gérer et compléter le menu des Terrasses de Courbevoie en ajoutant ou supprimant des plats, des menus, des catégories...etc.</p>
 				</div>
 			</div>

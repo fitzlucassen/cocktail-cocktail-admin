@@ -14,11 +14,12 @@
 		private $_id_Subcategory;
 		private $_id_MealCategory;
 		private $_description;
+		private $_active;
 		private $_queryBuilder;
 
-		public function __construct($id = '', $id_Subcategory = '', $id_MealCategory = '', $description = ''){
+		public function __construct($id = '', $id_Subcategory = '', $id_MealCategory = '', $description = '', $active = ''){
 			$this->_queryBuilder = new Core\QueryBuilder(true);
-			$this->fillObject(array("id" => $id, "id_Subcategory" => $id_Subcategory, "id_MealCategory" => $id_MealCategory, "description" => $description));
+			$this->fillObject(array("id" => $id, "id_Subcategory" => $id_Subcategory, "id_MealCategory" => $id_MealCategory, "description" => $description, "active" => $active));
 		}
 
 		/***********
@@ -36,6 +37,9 @@
 		public function getDescription() {
 			return $this->_description;
 		}
+		public function getActive() {
+			return $this->_active;
+		}
 		/*******
 		 * END *
 		 *******/
@@ -49,5 +53,7 @@
 				$this->_id_MealCategory = $properties["id_MealCategory"];
 			if(!empty($properties["description"]))
 				$this->_description = $properties["description"];
+			if(!empty($properties["active"]))
+				$this->_active = $properties["active"];
 		}
 	}
