@@ -78,7 +78,7 @@ $this->beginSection();
                                 <input class="file-path validate" type="text" placeholder="Illustrez le menu par une photo">
                             </div>
                         </div>
-                        <img src="" alt="" id="menuImage" style="display: block; width: 50%;margin:20px auto;"/>
+                        <img src="" alt="" id="menuImage" style="display: block; width: 50%;margin:20px auto;" />
                     </div>
 
                     <input type="hidden" name="menuCategory" id="menuCategory" value="" />
@@ -106,10 +106,8 @@ $this->beginSection();
                             <label for="mealName">Nom du plat*</label>
                         </div>
                         <div class="input-field col s6">
-                            <select id="mealCategory" name="mealCategory">
-                                <option value="" disabled selected>Chargement...</option>
-                            </select>
-                            <label>Catégorie de plat*</label>
+                            <input id="mealCategory" name="mealCategory" type="text" class="validate autocomplete">
+                            <label for="mealCategory">Catégorie de plat*</label>
                         </div>
                     </div>
 

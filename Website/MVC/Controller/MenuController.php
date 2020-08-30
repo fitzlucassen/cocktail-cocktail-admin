@@ -515,7 +515,8 @@ class MenuController extends Controller
 					"id" => $menu->getId(),
 					"name" => $menu->getName(),
 					"creationDate" => $menu->getCreationDate(),
-					"price" => $menu->getPrice()
+					"price" => $menu->getPrice(),
+					"active" => $menu->getActive()
 				));
 			}
 		}
@@ -563,6 +564,9 @@ class MenuController extends Controller
 
 			$mealRepository->update((int) $data["id"], $data);
 
+			$m = $mealRepository->getById((int) $data["id"]);
+			$data['active'] = $m->getActive();
+			
 			$Model->result = $data;
 		}
 

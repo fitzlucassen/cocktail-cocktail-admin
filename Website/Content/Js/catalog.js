@@ -2,12 +2,22 @@ $(document).ready(function () {
     var service = new MenuService();
     var view = new MenuView();
 
+    service.getSubCategories(function(data){
+        autoComplete = {};
+        data.forEach(function (element) {
+            autoComplete[element.id + " - " + element.name] = null;
+        });
+        $('#mealCategory.autocomplete').autocomplete({
+            data: autoComplete
+        });
+    });
+
     service.getMealCategories(function (data) {
         autoComplete = {};
         data.forEach(function (element) {
             autoComplete[element.id + " - " + element.name + " - " + element.price] = null;
         });
-        $('.autocomplete').autocomplete({
+        $('#mealCategoryName.autocomplete').autocomplete({
             data: autoComplete,
             onAutocomplete: splitMealCategoryName
         });
