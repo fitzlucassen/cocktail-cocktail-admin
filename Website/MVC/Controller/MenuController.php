@@ -127,6 +127,29 @@ class MenuController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
+	public function CocktailCocktailGetSubCategory($params)
+	{
+		$id = $params[0];
+		$repository = $this->_repositoryManager->get('Cocktailcocktailsubcategories');
+		$category = $repository->getById((int) $id);
+		$Model = new Model\WebserviceModel($this->_repositoryManager);
+
+		// Process request...
+		$Model->result = array();
+
+		array_push($Model->result, array(
+			"id" => $category->getId(),
+			"name" => $category->getName()
+		));
+
+		$Model->result = json_encode($Model->result);
+
+		$this->setLayout('json');
+		$this->setController('webservice');
+		$this->setAction('index');
+		$this->_view->view($Model, 'json');
+	}
+
 	public function CocktailCocktailGetMealCategories()
 	{
 		$subcategories = Repository\CocktailcocktailmealcategoryRepository::getAll($this->_repositoryManager->getConnection());
@@ -558,6 +581,14 @@ class MenuController extends Controller
 			// Then update the meal itself
 			$data["id_MealCategory"] = (int) $idMealCategory;
 
+			$id_Subcategory = explode(' - ', $data["id_Subcategory"]);
+			if(count($id_Subcategory) > 1) {
+				$data["id_Subcategory"] = $id_Subcategory[0];
+			}
+			else {
+				// TODO: insert new subcategory and update the id for the update (do the same for ADD)
+			}
+
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
 			$data["id_Subcategory"] = (int) $data["id_Subcategory"];
 			$data["category"] = $subcategoryRepository->getById($data["id_Subcategory"])->getName();
@@ -566,7 +597,7 @@ class MenuController extends Controller
 
 			$m = $mealRepository->getById((int) $data["id"]);
 			$data['active'] = $m->getActive();
-			
+
 			$Model->result = $data;
 		}
 
@@ -603,10 +634,11 @@ class MenuController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
-	public function Activate(){
+	public function Activate()
+	{
 		if (Core\Request::isPost() || Core\Request::isPost()) {
 			$data = Core\Request::cleanRequest();
-			
+
 			$menuRepository = $this->_repositoryManager->get('cocktailcocktailmenu');
 			$menu = $menuRepository->getById($data["id"]);
 			$isActive = $data["isActive"] == "false" ? 0 : 1;
@@ -622,10 +654,11 @@ class MenuController extends Controller
 		}
 	}
 
-	public function MealActivate(){
+	public function MealActivate()
+	{
 		if (Core\Request::isPost() || Core\Request::isPost()) {
 			$data = Core\Request::cleanRequest();
-			
+
 			$mealRepository = $this->_repositoryManager->get('cocktailcocktailmeal');
 			$meal = $mealRepository->getById($data["id"]);
 			$isActive = $data["isActive"] == "false" ? 0 : 1;

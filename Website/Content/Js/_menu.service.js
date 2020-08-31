@@ -45,6 +45,17 @@ class MenuService {
             error: function (data) { console.log(data); }
         });
     }
+    getSubCategory(id, successCallback){
+        $.ajax({
+            method: "GET",
+            url: "/menu/cocktailCocktailGetSubCategories/" + id,
+            dataType: 'json',
+            success: function (data) {
+                successCallback(data[0]);
+            },
+            error: function (data) { console.log(data); }
+        });
+    }
     getMealCategories(successCallback) {
         $.ajax({
             method: "GET",

@@ -2,22 +2,22 @@ $(document).ready(function () {
     var service = new MenuService();
     var view = new MenuView();
 
-    service.getSubCategories(function(data){
-        autoComplete = {};
+    service.getSubCategories(function (data) {
+        var autoComplete = {};
         data.forEach(function (element) {
             autoComplete[element.id + " - " + element.name] = null;
         });
-        $('#mealCategory.autocomplete').autocomplete({
+        $('#mealCategory').autocomplete({
             data: autoComplete
         });
     });
 
     service.getMealCategories(function (data) {
-        autoComplete = {};
+        var autoComplete = {};
         data.forEach(function (element) {
             autoComplete[element.id + " - " + element.name + " - " + element.price] = null;
         });
-        $('#mealCategoryName.autocomplete').autocomplete({
+        $('#mealCategoryName').autocomplete({
             data: autoComplete,
             onAutocomplete: splitMealCategoryName
         });
@@ -269,23 +269,19 @@ $(document).ready(function () {
         $('#mealCategoryName').val(catName);
         $('#mealCategoryId').val(dataCatId);
 
-        service.getSubCategories(function (data) {
-            view.updateMealCategoriesSelect(data);
-
-            $('select').val(catId);
-            $('select').formSelect();
+        service.getSubCategory(id, function (data) {
+            $('#mealCategory').val(data.id + " - " + data.name);
+            M.updateTextFields();
         });
-
-        M.updateTextFields();
     });
 
     $('#catalog-page .col').on('click', '.category-menu .activate', function (e) {
         e.preventDefault();
         e.stopPropagation();
 
-        if($(this).prop('checked') && !confirm("êtes-vous sur de vouloir ré-activer ce menu ?"))
+        if ($(this).prop('checked') && !confirm("êtes-vous sur de vouloir ré-activer ce menu ?"))
             return false;
-        else if(!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir désactiver ce menu ?"))
+        else if (!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir désactiver ce menu ?"))
             return false;
 
         var element = $(this);
@@ -303,14 +299,14 @@ $(document).ready(function () {
             alert('Something wrong happened... try later');
         }).always(function () { });
     });
-    
+
     $('#catalog-page .col').on('click', '.meal-menu .activate', function (e) {
         e.preventDefault();
         e.stopPropagation();
 
-        if($(this).prop('checked') && !confirm("êtes-vous sur de vouloir ré-activer ce plat ?"))
+        if ($(this).prop('checked') && !confirm("êtes-vous sur de vouloir ré-activer ce plat ?"))
             return false;
-        else if(!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir désactiver ce plat ?"))
+        else if (!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir désactiver ce plat ?"))
             return false;
 
         var element = $(this);

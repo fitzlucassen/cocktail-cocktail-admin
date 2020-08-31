@@ -8,7 +8,6 @@
 	class Request {
 
 		public function __construct() {
-			parent::__construct();
 		}
 
 		public static function redirectTo($url, $httpCode = 200, $contentType = ""){
@@ -112,7 +111,7 @@
 
 		private static function cleanValue($value){
 			if(gettype($value) == 'string'){
-				$value = htmlspecialchars($value);
+				$value = htmlspecialchars($value, ENT_QUOTES);
 			}
 			else if(in_array(gettype($value), array('integer', 'double'))){
 				$value = intval($value);
