@@ -16,4 +16,15 @@
 			parent::__construct($pdo, $lang);
 		}
 
+		public function add($properties) {
+			$query = $this->_queryBuilder->insert("cocktailcocktailsubcategories", array('name' => $properties["name"]))->getQuery();
+			try {
+				$result = $this->_pdo->Query($query);
+				return $this->_pdo->lastInsertId();
+			}
+			catch(\PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
 	}

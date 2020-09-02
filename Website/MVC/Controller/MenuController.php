@@ -348,8 +348,15 @@ class MenuController extends Controller
 			else
 				$data["id_MealCategory"] = null;
 
+			$id_Subcategory = explode(' - ', $data["id_Subcategory"]);
+			if (count($id_Subcategory) > 1) {
+				$data["id_Subcategory"] = $id_Subcategory[0];
+			} else {
+				$newSubcategoryId = $subcategoryRepository->add(["name" => $id_Subcategory[0]]);
+				$data["id_Subcategory"] = $newSubcategoryId;
+			}
+
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
-			$data["id_Subcategory"] = (int) $data["id_Subcategory"];
 			$data["category"] = $subcategoryRepository->getById($data["id_Subcategory"])->getName();
 
 			$added = $mealRepository->add($data);
@@ -582,15 +589,14 @@ class MenuController extends Controller
 			$data["id_MealCategory"] = (int) $idMealCategory;
 
 			$id_Subcategory = explode(' - ', $data["id_Subcategory"]);
-			if(count($id_Subcategory) > 1) {
+			if (count($id_Subcategory) > 1) {
 				$data["id_Subcategory"] = $id_Subcategory[0];
-			}
-			else {
-				// TODO: insert new subcategory and update the id for the update (do the same for ADD)
+			} else {
+				$newSubcategoryId = $subcategoryRepository->add(["name" => $id_Subcategory[0]]);
+				$data["id_Subcategory"] = $newSubcategoryId;
 			}
 
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
-			$data["id_Subcategory"] = (int) $data["id_Subcategory"];
 			$data["category"] = $subcategoryRepository->getById($data["id_Subcategory"])->getName();
 
 			$mealRepository->update((int) $data["id"], $data);

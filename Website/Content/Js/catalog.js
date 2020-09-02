@@ -269,7 +269,7 @@ $(document).ready(function () {
         $('#mealCategoryName').val(catName);
         $('#mealCategoryId').val(dataCatId);
 
-        service.getSubCategory(id, function (data) {
+        service.getSubCategory(catId, function (data) {
             $('#mealCategory').val(data.id + " - " + data.name);
             M.updateTextFields();
         });

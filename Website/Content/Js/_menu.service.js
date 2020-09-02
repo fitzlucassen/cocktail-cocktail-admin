@@ -48,7 +48,7 @@ class MenuService {
     getSubCategory(id, successCallback){
         $.ajax({
             method: "GET",
-            url: "/menu/cocktailCocktailGetSubCategories/" + id,
+            url: "/menu/cocktailCocktailGetSubCategory/" + id,
             dataType: 'json',
             success: function (data) {
                 successCallback(data[0]);
