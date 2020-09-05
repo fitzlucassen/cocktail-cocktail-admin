@@ -73,7 +73,7 @@ module.exports = function (grunt) {
 		},
 		img: {
 			task: {
-				src: ['Website/Content/Media/Image/**/*.jpg', 'Website/Content/Media/Image/**/*.jpeg', 'Website/Content/Media/Image/**/*.png', 'Website/Content/Media/Image/**/*.gif']
+				src: ['Website/Content/Media/Image/**/*.jpg', 'Website/Content/Media/Image/**/*.jpeg', 'Website/Content/Media/Image/**/*.png', 'Website/Content/Media/Image/**/*.gif', 'upload_test/**/*.jpg', 'upload_test/**/*.jpeg', 'upload_test/**/*.png', 'upload_test/**/*.gif']
 			}
 		}
 	});
