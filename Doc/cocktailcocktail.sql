@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 13 mai 2020 à 21:16
--- Version du serveur :  5.7.26
--- Version de PHP :  7.2.18
+-- Hôte : localhost
+-- Généré le :  sam. 05 sep. 2020 à 12:17
+-- Version du serveur :  5.5.61-38.13-log
+-- Version de PHP :  7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,12 +28,10 @@ SET time_zone = "+00:00";
 -- Structure de la table `cocktailcocktailcategories`
 --
 
-DROP TABLE IF EXISTS `cocktailcocktailcategories`;
-CREATE TABLE IF NOT EXISTS `cocktailcocktailcategories` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+CREATE TABLE `cocktailcocktailcategories` (
+  `id` tinyint(5) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `cocktailcocktailcategories`
@@ -44,9 +42,10 @@ INSERT INTO `cocktailcocktailcategories` (`id`, `name`) VALUES
 (2, 'Buffet'),
 (3, 'Petit-déjeuner'),
 (4, 'Lunch box'),
-(5, 'Plateau sandwiches'),
+(5, 'Sandwiches & Snacking'),
 (6, 'Cocktail'),
-(7, 'Boissons');
+(7, 'Boissons'),
+(12, 'Planches');
 
 -- --------------------------------------------------------
 
@@ -54,17 +53,13 @@ INSERT INTO `cocktailcocktailcategories` (`id`, `name`) VALUES
 -- Structure de la table `cocktailcocktailmeal`
 --
 
-DROP TABLE IF EXISTS `cocktailcocktailmeal`;
-CREATE TABLE IF NOT EXISTS `cocktailcocktailmeal` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cocktailcocktailmeal` (
+  `id` int(5) NOT NULL,
   `id_Subcategory` tinyint(5) NOT NULL,
   `id_MealCategory` tinyint(5) DEFAULT NULL,
   `description` varchar(500) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `FK_Meal_Subcategory` (`id_Subcategory`),
-  KEY `FK_Meal_MealCategory` (`id_MealCategory`)
-) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
+  `active` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `cocktailcocktailmeal`
@@ -246,7 +241,9 @@ INSERT INTO `cocktailcocktailmeal` (`id`, `id_Subcategory`, `id_MealCategory`, `
 (198, 5, NULL, 'Tiramisu au cacao amer', 1),
 (199, 5, NULL, 'Compote de pommes et rhubarbe, copeaux de chocolat  ', 1),
 (200, 5, NULL, 'Salade d’ananas aux éclats de noix de pécan', 1),
-(201, 5, NULL, 'Panacotta au coulis de fruits rouges et zestes d’agrumes', 1);
+(201, 5, NULL, 'Panacotta au coulis de fruits rouges et zestes d’agrumes', 1),
+(202, 1, NULL, 'Salade de fruits frais, sirop d’hibiscus et sureau', 1),
+(203, 1, NULL, 'Poêlée d’abricots, crème mascarpone, thym et citron', 1);
 
 -- --------------------------------------------------------
 
@@ -254,13 +251,11 @@ INSERT INTO `cocktailcocktailmeal` (`id`, `id_Subcategory`, `id_MealCategory`, `
 -- Structure de la table `cocktailcocktailmealcategory`
 --
 
-DROP TABLE IF EXISTS `cocktailcocktailmealcategory`;
-CREATE TABLE IF NOT EXISTS `cocktailcocktailmealcategory` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cocktailcocktailmealcategory` (
+  `id` tinyint(5) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `price` double(4,2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+  `price` double(4,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `cocktailcocktailmealcategory`
@@ -285,53 +280,54 @@ INSERT INTO `cocktailcocktailmealcategory` (`id`, `name`, `price`) VALUES
 -- Structure de la table `cocktailcocktailmenu`
 --
 
-DROP TABLE IF EXISTS `cocktailcocktailmenu`;
-CREATE TABLE IF NOT EXISTS `cocktailcocktailmenu` (
-  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cocktailcocktailmenu` (
+  `id` tinyint(4) NOT NULL,
   `id_Category` tinyint(4) NOT NULL,
   `name` varchar(255) NOT NULL,
   `price` double(4,2) DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `creationDate` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Menu_Category` (`id_Category`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+  `creationDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `cocktailcocktailmenu`
 --
 
 INSERT INTO `cocktailcocktailmenu` (`id`, `id_Category`, `name`, `price`, `image_url`, `active`, `creationDate`) VALUES
-(1, 1, 'Menu du Marché', 23.00, '/upload_test/WhatsApp Image 2020-03-04 at 19.17.02.jpeg', 1, '2019-10-19'),
-(2, 2, 'Buffet Tradition', 21.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(3, 2, 'Buffet du Monde', 26.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(4, 2, 'Buffet Italien', 23.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(5, 2, 'Buffet Découverte', 32.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(6, 1, 'Menu Tradition', 19.90, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(7, 1, 'Menu Gourmet', 22.90, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(8, 1, 'Menu Plaisir', 24.90, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(9, 1, 'Menu Délice', 27.90, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(10, 1, 'Menu Prestige', 32.90, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-17'),
-(23, 3, 'Petit-Déjeuner Classique', 8.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-18'),
-(24, 3, 'Petit-Déjeuner Prestige', 10.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-18'),
-(25, 4, 'Lunch Box Classique', 15.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2020-01-14'),
-(26, 5, 'Plateau Sandwiches Classique', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-19'),
-(27, 6, 'Apéritif 8 pièces', 12.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(28, 6, 'Apéritif 12 pièces', 18.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(29, 6, 'Déjeuner 20 pièces', 28.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(30, 6, 'Déjeuner 25 pièces', 35.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(31, 6, 'Goûter 10 pièces', 15.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(32, 7, 'Bordeaux', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(33, 7, 'Bourgogne', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(34, 7, 'Loire', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(35, 7, 'Vallée du Rhone', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(36, 7, 'Autre', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(37, 7, 'Champagne', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(38, 7, 'Non Alcoolisée', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(39, 7, 'Boisson Chaude', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(40, 7, 'Alcool', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20'),
-(41, 7, 'Diver', 0.00, '/Website/Content/Media/Image/User_01BIS.png', 1, '2019-10-20');
+(1, 1, 'Menu du Marché', 23.00, '/upload_test/new_tradition.png', 1, '2019-10-19'),
+(2, 2, 'Buffet Tradition', 21.00, '/upload_test/Sans titre.png', 1, '2019-10-17'),
+(3, 2, 'Buffet du Monde', 26.00, '/upload_test/Sans titre.png', 1, '2019-10-17'),
+(4, 2, 'Buffet Italien', 23.00, '/upload_test/Sans titre.png', 1, '2019-10-17'),
+(5, 2, 'Buffet Découverte', 32.00, '/upload_test/Sans titre.png', 1, '2019-10-17'),
+(6, 1, 'Menu Tradition', 19.90, '/upload_test/new_tradition.png', 1, '2019-10-17'),
+(7, 1, 'Menu Gourmet', 22.90, '/upload_test/new_gourmet.png', 1, '2019-10-17'),
+(8, 1, 'Menu Plaisir', 24.90, '/upload_test/new_plaisir.png', 1, '2019-10-17'),
+(9, 1, 'Menu Délice', 27.90, '/upload_test/new_delice.png', 1, '2019-10-17'),
+(10, 1, 'Menu Prestige', 32.90, '/upload_test/new_vendome.png', 1, '2019-10-17'),
+(23, 3, 'Petit-Déjeuner Classique', 8.00, '/upload_test/Sans titre.png', 1, '2019-10-18'),
+(24, 3, 'Petit-Déjeuner Prestige', 10.00, '/upload_test/Sans titre.png', 1, '2019-10-18'),
+(25, 4, 'Lunch Box Classique', 15.00, '/upload_test/DSC02476.JPG', 1, '2020-01-14'),
+(26, 5, 'Plateau Sandwiches Classique', 0.00, '/upload_test/new_dess.png', 1, '2020-09-05'),
+(27, 6, 'Plateau cocktail prestige', 12.00, '/upload_test/new_sal1.png', 1, '2020-09-04'),
+(28, 6, 'Plateau cocktail fraicheur', 18.00, '/upload_test/new_sal2.png', 1, '2020-09-04'),
+(29, 6, 'Plateau cocktail terroir', 28.00, '/upload_test/new_sal3.png', 1, '2020-09-04'),
+(31, 6, 'Plateau cocktail évasion', 15.00, '/upload_test/new_suc1.png', 1, '2020-09-04'),
+(32, 7, 'Bordeaux', 0.00, '/upload_test/Sans titre.png', 1, '2019-10-20'),
+(36, 7, 'Autre', 0.00, '/upload_test/Sans titre.png', 1, '2019-10-20'),
+(37, 7, 'Champagne', 0.00, '/upload_test/Sans titre.png', 1, '2019-10-20'),
+(38, 7, 'Non Alcoolisée', 0.00, '/upload_test/Sans titre.png', 1, '2019-10-20'),
+(39, 7, 'Boisson Chaude', 0.00, '/upload_test/Sans titre.png', 1, '2019-10-20'),
+(40, 7, 'Alcool', 0.00, '/upload_test/Sans titre.png', 1, '2019-10-20'),
+(41, 7, 'Diver', 0.00, '/upload_test/Sans titre.png', 1, '2019-10-20'),
+(43, 6, 'Plateau cocktail gourmand', 12.00, '/upload_test/new_suc2.png', 1, '2020-09-04'),
+(44, 6, 'Plateau cocktail tradition', 12.00, '/upload_test/new_suc3.png', 1, '2020-09-04'),
+(45, 6, 'Plateau macarons', 12.00, '/upload_test/new_macaron.png', 1, '2020-09-04'),
+(46, 6, 'Plateau brochettes de fruit frais', 12.00, '/upload_test/new_broch.png', 1, '2020-09-04'),
+(47, 12, 'Planche charcuterie', 12.00, '/upload_test/charcuterie.JPG', 1, '2020-08-21'),
+(48, 12, 'Planche fromages', 12.00, '/upload_test/fromage.JPG', 1, '2020-08-21'),
+(49, 5, 'Les Salad&#039;Bar', 35.00, '/upload_test/new_salad.png', 1, '2020-09-04'),
+(50, 5, 'Les Pâtiss&#039;Bar', NULL, '/upload_test/new_dess.png', 1, '2020-09-04');
 
 -- --------------------------------------------------------
 
@@ -339,16 +335,12 @@ INSERT INTO `cocktailcocktailmenu` (`id`, `id_Category`, `name`, `price`, `image
 -- Structure de la table `cocktailcocktailmenumeal`
 --
 
-DROP TABLE IF EXISTS `cocktailcocktailmenumeal`;
-CREATE TABLE IF NOT EXISTS `cocktailcocktailmenumeal` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `cocktailcocktailmenumeal` (
+  `id` int(5) NOT NULL,
   `id_Menu` tinyint(5) NOT NULL,
   `id_Meal` int(5) NOT NULL,
-  `creationDate` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_Menu_Meal_Menu` (`id_Menu`),
-  KEY `FK_Menu_Meal_Meal` (`id_Meal`)
-) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
+  `creationDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `cocktailcocktailmenumeal`
@@ -531,7 +523,9 @@ INSERT INTO `cocktailcocktailmenumeal` (`id`, `id_Menu`, `id_Meal`, `creationDat
 (198, 25, 198, '2020-01-14'),
 (199, 25, 199, '2020-01-14'),
 (200, 25, 200, '2020-01-14'),
-(201, 25, 201, '2020-01-14');
+(201, 25, 201, '2020-01-14'),
+(202, 49, 202, '2020-08-21'),
+(203, 49, 203, '2020-08-21');
 
 -- --------------------------------------------------------
 
@@ -539,12 +533,10 @@ INSERT INTO `cocktailcocktailmenumeal` (`id`, `id_Menu`, `id_Meal`, `creationDat
 -- Structure de la table `cocktailcocktailsubcategories`
 --
 
-DROP TABLE IF EXISTS `cocktailcocktailsubcategories`;
-CREATE TABLE IF NOT EXISTS `cocktailcocktailsubcategories` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+CREATE TABLE `cocktailcocktailsubcategories` (
+  `id` tinyint(5) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `cocktailcocktailsubcategories`
@@ -565,15 +557,13 @@ INSERT INTO `cocktailcocktailsubcategories` (`id`, `name`) VALUES
 -- Structure de la table `header`
 --
 
-DROP TABLE IF EXISTS `header`;
-CREATE TABLE IF NOT EXISTS `header` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `header` (
+  `id` tinyint(5) NOT NULL,
   `title` varchar(100) NOT NULL DEFAULT '',
   `metaDescription` text NOT NULL,
   `metaKeywords` text NOT NULL,
-  `lang` varchar(2) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `lang` varchar(2) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `header`
@@ -588,12 +578,10 @@ INSERT INTO `header` (`id`, `title`, `metaDescription`, `metaKeywords`, `lang`) 
 -- Structure de la table `lang`
 --
 
-DROP TABLE IF EXISTS `lang`;
-CREATE TABLE IF NOT EXISTS `lang` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
-  `code` varchar(2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `lang` (
+  `id` tinyint(5) NOT NULL,
+  `code` varchar(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `lang`
@@ -608,12 +596,10 @@ INSERT INTO `lang` (`id`, `code`) VALUES
 -- Structure de la table `lesterrassescategories`
 --
 
-DROP TABLE IF EXISTS `lesterrassescategories`;
-CREATE TABLE IF NOT EXISTS `lesterrassescategories` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+CREATE TABLE `lesterrassescategories` (
+  `id` tinyint(5) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `lesterrassescategories`
@@ -631,16 +617,13 @@ INSERT INTO `lesterrassescategories` (`id`, `name`) VALUES
 -- Structure de la table `lesterrassesmeal`
 --
 
-DROP TABLE IF EXISTS `lesterrassesmeal`;
-CREATE TABLE IF NOT EXISTS `lesterrassesmeal` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `lesterrassesmeal` (
+  `id` tinyint(5) NOT NULL,
   `id_Category` tinyint(5) NOT NULL,
   `description` varchar(255) NOT NULL,
   `price` double(4,2) NOT NULL,
-  `creationDate` date NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_LesTerrassesMeal_Category` (`id_Category`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+  `creationDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `lesterrassesmeal`
@@ -679,9 +662,8 @@ INSERT INTO `lesterrassesmeal` (`id`, `id_Category`, `description`, `price`, `cr
 -- Structure de la table `request`
 --
 
-DROP TABLE IF EXISTS `request`;
-CREATE TABLE IF NOT EXISTS `request` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `request` (
+  `id` int(5) NOT NULL,
   `id_User` tinyint(5) DEFAULT NULL,
   `isCompany` bit(1) NOT NULL,
   `companyName` varchar(255) DEFAULT NULL,
@@ -698,9 +680,8 @@ CREATE TABLE IF NOT EXISTS `request` (
   `eventTime` varchar(255) DEFAULT NULL,
   `people` int(5) DEFAULT NULL,
   `isCommand` tinyint(1) NOT NULL DEFAULT '0',
-  `creationDate` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  `creationDate` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `request`
@@ -708,19 +689,10 @@ CREATE TABLE IF NOT EXISTS `request` (
 
 INSERT INTO `request` (`id`, `id_User`, `isCompany`, `companyName`, `companySiret`, `firstname`, `lastname`, `phoneNumber`, `email`, `fromCompany`, `message`, `zone`, `eventZipcode`, `eventDate`, `eventTime`, `people`, `isCommand`, `creationDate`) VALUES
 (1, NULL, b'1', 'Betclic', 'FR76129803344', 'Nicolas', 'Beraud', '0689571118', 'ergerg@azd.com', 'Mets-Tendances', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.', 3, '', '2019-12-12', '15:00:00', 35, 0, '2019-11-08'),
-(2, NULL, b'0', NULL, NULL, 'Thibault', 'Dulon', '0689675644', 'zzerrty@gmail.com', 'Cocktail-Cocktail', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quis nisi risus. Pellentesque tincidunt diam mi, bibendum auctor lacus lacinia id. Nunc dignissim semper convallis. Donec eu luctus tellus, eu lacinia nibh. Aenean laoreet, ipsum eget facilisis pharetra, lacus orci commodo eros, et tempor dui diam vel ante. Donec eget urna id ex auctor suscipit. Fusce id feugiat arcu. Aliquam erat volutpat.', 3, '', NULL, NULL, NULL, 0, '2019-11-30'),
-(3, NULL, b'1', 'KEAKR', '134RFR30', NULL, NULL, '0689471118', 'thibault.dulon@gmail.com', 'Mets-Tendances', 'zedfp iojze vpijzef pijzef ', 3, '', NULL, NULL, NULL, 0, '2019-11-18 16:46:30'),
-(4, NULL, b'1', 'testca', 'testca', NULL, NULL, '09876543', 'gervdf@erve.vom', 'Mets-Tendances', '', 3, '', NULL, NULL, NULL, 0, '2020-02-01 22:49:43'),
-(5, NULL, b'1', 'testca', 'testca', NULL, NULL, '09876543', 'gervdf@erve.vom', 'Mets-Tendances', '', 3, '', NULL, NULL, NULL, 0, '2020-02-01 22:50:32'),
-(6, NULL, b'1', 'KEAKR', '134RFR30', NULL, NULL, '0689471118', 'thibault.dulon@gmail.com', 'Mets-Tendances', 'zEFP 99UZE FP9UEP ZEC ZEP VZEUP', 3, '', '2018-06-04', NULL, 20, 0, '2020-02-02 21:27:39'),
 (7, NULL, b'1', 'KEAKR', '134RFR30', NULL, NULL, '0610370251', 'thibault.dulon@gmail.com', 'Cocktail-Cocktail', 'reg e terhtyn uj yuj rdfv', 3, '', NULL, NULL, NULL, 0, '2020-03-21 16:52:18'),
 (8, NULL, b'1', 'testca', 'zef9898', NULL, NULL, '+33689471118', 'thibault.dulon@gmail.com', 'Cocktail-Cocktail', 'uhkbjnk,;', 3, '', NULL, NULL, NULL, 0, '2020-03-22 17:03:14'),
 (9, NULL, b'1', 'keakr', 'zef9898', NULL, NULL, '+33689471118', 'thibault.dulon@gmail.com', 'Cocktail-Cocktail', 'dsfgh', 3, '', NULL, NULL, NULL, 0, '2020-03-22 17:40:33'),
 (10, 5, b'1', NULL, NULL, NULL, NULL, '', '', 'Cocktail-Cocktail', '', 3, '', NULL, NULL, NULL, 0, '2020-03-22 17:54:16'),
-(11, 5, b'1', NULL, NULL, NULL, NULL, '', 'ererg@ergerg.erg', 'Cocktail-Cocktail', '', 3, '', NULL, NULL, NULL, 1, '2020-03-22 17:57:16'),
-(12, 5, b'1', NULL, NULL, NULL, NULL, '09876543', 'ererg@ergerg.erg', 'Cocktail-Cocktail', '', 3, NULL, NULL, NULL, NULL, 1, '2020-05-08 17:30:44'),
-(13, 5, b'1', NULL, NULL, NULL, NULL, '09876543', 'ererg@ergerg.erg', 'Cocktail-Cocktail', '', 3, NULL, NULL, NULL, NULL, 1, '2020-05-08 17:33:09'),
-(14, 5, b'1', NULL, NULL, NULL, NULL, '09876543', 'ererg@ergerg.erg', 'Cocktail-Cocktail', '', 3, NULL, NULL, NULL, NULL, 1, '2020-05-09 13:08:10'),
 (15, 5, b'1', NULL, NULL, NULL, NULL, '09876543', 'ererg@ergerg.erg', 'Cocktail-Cocktail', '', 2, '75012', NULL, NULL, NULL, 1, '2020-05-09 13:36:02');
 
 -- --------------------------------------------------------
@@ -729,16 +701,13 @@ INSERT INTO `request` (`id`, `id_User`, `isCompany`, `companyName`, `companySire
 -- Structure de la table `requestcart`
 --
 
-DROP TABLE IF EXISTS `requestcart`;
-CREATE TABLE IF NOT EXISTS `requestcart` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `requestcart` (
+  `id` int(5) NOT NULL,
   `id_Request` int(5) NOT NULL,
   `id_Menu` int(5) NOT NULL,
   `id_Meal` int(5) NOT NULL,
-  `quantity` int(5) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_requestcart_request` (`id_Request`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+  `quantity` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `requestcart`
@@ -775,15 +744,12 @@ INSERT INTO `requestcart` (`id`, `id_Request`, `id_Menu`, `id_Meal`, `quantity`)
 -- Structure de la table `rewrittingurl`
 --
 
-DROP TABLE IF EXISTS `rewrittingurl`;
-CREATE TABLE IF NOT EXISTS `rewrittingurl` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `rewrittingurl` (
+  `id` tinyint(5) NOT NULL,
   `idRouteUrl` tinyint(5) NOT NULL,
   `urlMatched` varchar(255) NOT NULL,
-  `lang` varchar(2) NOT NULL DEFAULT 'fr',
-  PRIMARY KEY (`id`),
-  KEY `FK_RewrittingUrl_RouteUrl` (`idRouteUrl`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  `lang` varchar(2) NOT NULL DEFAULT 'fr'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `rewrittingurl`
@@ -803,15 +769,13 @@ INSERT INTO `rewrittingurl` (`id`, `idRouteUrl`, `urlMatched`, `lang`) VALUES
 -- Structure de la table `routeurl`
 --
 
-DROP TABLE IF EXISTS `routeurl`;
-CREATE TABLE IF NOT EXISTS `routeurl` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `routeurl` (
+  `id` tinyint(5) NOT NULL,
   `name` varchar(100) NOT NULL DEFAULT '',
   `controller` varchar(100) NOT NULL DEFAULT '',
   `action` varchar(100) NOT NULL DEFAULT '',
-  `order` tinyint(2) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `order` tinyint(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `routeurl`
@@ -831,9 +795,8 @@ INSERT INTO `routeurl` (`id`, `name`, `controller`, `action`, `order`) VALUES
 -- Structure de la table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` tinyint(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `id` tinyint(5) NOT NULL,
   `isCompany` bit(1) NOT NULL DEFAULT b'0',
   `companyName` varchar(255) DEFAULT NULL,
   `companySiret` varchar(255) DEFAULT NULL,
@@ -846,9 +809,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `isActive` bit(1) NOT NULL DEFAULT b'0',
   `fromCompany` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `creationDate` date NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  `creationDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `user`
@@ -865,13 +827,11 @@ INSERT INTO `user` (`id`, `isCompany`, `companyName`, `companySiret`, `firstname
 -- Structure de la table `zipcodezone`
 --
 
-DROP TABLE IF EXISTS `zipcodezone`;
-CREATE TABLE IF NOT EXISTS `zipcodezone` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `zipcodezone` (
+  `id` int(5) NOT NULL,
   `zipcode` varchar(255) NOT NULL,
-  `zone` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
+  `zone` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `zipcodezone`
@@ -939,6 +899,214 @@ INSERT INTO `zipcodezone` (`id`, `zipcode`, `zone`) VALUES
 (59, '92330', 2),
 (60, '92420', 2),
 (61, '92410', 2);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `cocktailcocktailcategories`
+--
+ALTER TABLE `cocktailcocktailcategories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cocktailcocktailmeal`
+--
+ALTER TABLE `cocktailcocktailmeal`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_Meal_Subcategory` (`id_Subcategory`),
+  ADD KEY `FK_Meal_MealCategory` (`id_MealCategory`);
+
+--
+-- Index pour la table `cocktailcocktailmealcategory`
+--
+ALTER TABLE `cocktailcocktailmealcategory`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `cocktailcocktailmenu`
+--
+ALTER TABLE `cocktailcocktailmenu`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_Menu_Category` (`id_Category`);
+
+--
+-- Index pour la table `cocktailcocktailmenumeal`
+--
+ALTER TABLE `cocktailcocktailmenumeal`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_Menu_Meal_Menu` (`id_Menu`),
+  ADD KEY `FK_Menu_Meal_Meal` (`id_Meal`);
+
+--
+-- Index pour la table `cocktailcocktailsubcategories`
+--
+ALTER TABLE `cocktailcocktailsubcategories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `header`
+--
+ALTER TABLE `header`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `lang`
+--
+ALTER TABLE `lang`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `lesterrassescategories`
+--
+ALTER TABLE `lesterrassescategories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `lesterrassesmeal`
+--
+ALTER TABLE `lesterrassesmeal`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_LesTerrassesMeal_Category` (`id_Category`);
+
+--
+-- Index pour la table `request`
+--
+ALTER TABLE `request`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `requestcart`
+--
+ALTER TABLE `requestcart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_requestcart_request` (`id_Request`);
+
+--
+-- Index pour la table `rewrittingurl`
+--
+ALTER TABLE `rewrittingurl`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_RewrittingUrl_RouteUrl` (`idRouteUrl`);
+
+--
+-- Index pour la table `routeurl`
+--
+ALTER TABLE `routeurl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `zipcodezone`
+--
+ALTER TABLE `zipcodezone`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `cocktailcocktailcategories`
+--
+ALTER TABLE `cocktailcocktailcategories`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT pour la table `cocktailcocktailmeal`
+--
+ALTER TABLE `cocktailcocktailmeal`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+
+--
+-- AUTO_INCREMENT pour la table `cocktailcocktailmealcategory`
+--
+ALTER TABLE `cocktailcocktailmealcategory`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT pour la table `cocktailcocktailmenu`
+--
+ALTER TABLE `cocktailcocktailmenu`
+  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT pour la table `cocktailcocktailmenumeal`
+--
+ALTER TABLE `cocktailcocktailmenumeal`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+
+--
+-- AUTO_INCREMENT pour la table `cocktailcocktailsubcategories`
+--
+ALTER TABLE `cocktailcocktailsubcategories`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT pour la table `header`
+--
+ALTER TABLE `header`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `lang`
+--
+ALTER TABLE `lang`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `lesterrassescategories`
+--
+ALTER TABLE `lesterrassescategories`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `lesterrassesmeal`
+--
+ALTER TABLE `lesterrassesmeal`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT pour la table `request`
+--
+ALTER TABLE `request`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT pour la table `requestcart`
+--
+ALTER TABLE `requestcart`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT pour la table `rewrittingurl`
+--
+ALTER TABLE `rewrittingurl`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pour la table `routeurl`
+--
+ALTER TABLE `routeurl`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` tinyint(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `zipcodezone`
+--
+ALTER TABLE `zipcodezone`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- Contraintes pour les tables déchargées

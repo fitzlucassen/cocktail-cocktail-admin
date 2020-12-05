@@ -22,12 +22,12 @@ $this->endSection('head');
 $this->beginSection();
 ?>
 <div class="page">
-	<h1><?php echo $this->Model->company; ?> vient de vous créer un compte client</h1>
+	<h1><?php echo $this->Model['company']; ?> vient de vous créer un compte client</h1>
 	<p>A partir d'aujourd'hui, vous pourrez passez commande sur le site plus facilement</p>
 	<p>Grâce aux identifiants suivant, votre devis sera directement considéré comme une commande :</p>
 	<ul>
-		<li>Identifiant : <?php echo $this->Model->email; ?></li>
-		<li>Mot de passe : <?php echo $this->Model->password; ?></li>
+		<li>Identifiant : <?php echo $this->Model['email']; ?></li>
+		<li>Mot de passe : <?php echo $this->Model['password']; ?></li>
 	</ul>
 	<br />
 	<p>Merci pour votre confiance et à très bientôt.</p>

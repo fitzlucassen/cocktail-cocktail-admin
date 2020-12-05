@@ -93,7 +93,7 @@
 		}
 
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("user", array('isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'address' => $properties["address"], 'city' => $properties["city"], 'isActive' => $properties["isActive"], 'fromCompany' => $properties["fromCompany"], 'password' => $properties["password"], 'creationDate' => $properties["creationDate"], ))->getQuery();
+			$query = $this->_queryBuilder->insert("user", array('isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'address' => $properties["address"], 'zipcode' => $properties["zipcode"], 'city' => $properties["city"], 'isActive' => $properties["isActive"], 'fromCompany' => $properties["fromCompany"], 'password' => $properties["password"], 'creationDate' => $properties["creationDate"], ))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
@@ -104,7 +104,7 @@
 		}
 
 		public function update($id, $properties) {
-			$query = $this->_queryBuilder->update("user", array('isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'address' => $properties["address"], 'city' => $properties["city"], 'isActive' => $properties["isActive"], 'fromCompany' => $properties["fromCompany"], 'password' => $properties["password"], 'creationDate' => $properties["creationDate"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			$query = $this->_queryBuilder->update("user", array('isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'address' => $properties["address"], 'zipcode' => $properties["zipcode"], 'city' => $properties["city"], 'isActive' => $properties["isActive"], 'fromCompany' => $properties["fromCompany"], 'password' => $properties["password"], 'creationDate' => $properties["creationDate"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}

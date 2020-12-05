@@ -35,14 +35,21 @@ $this->beginSection();
             <div class="collection">
                 <?php
                 foreach ($this->Model->_clients as $client) {
-                    ?>
+                    $fromCompany = $client->getFromCompany();
+                    $color = "#736357";
+
+                    if(strpos($fromCompany, "Cocktail") !== false)
+                        $color = "#0d751e";
+                    else if(strpos($fromCompany, "Terrasses") !== false)
+                        $color = "#1d064b";
+                ?>
                     <a href="#!" class="collection-item avatar valign-wrapper" data-id="<?php echo $client->getId(); ?>">
                         <i class="material-icons circle">people</i>
                         <span class="title">
                             <b>
                                 <?php echo $client->getIsCompany() ? $client->getCompanyName() : $client->getFirstname() . " " . $client->getLastName(); ?>
                             </b>
-                            <span class="new badge" data-badge-caption=""><?php echo $client->getFromCompany(); ?></span>
+                            <span class="new badge" style="background:<?php echo $color; ?>" data-badge-caption=""><?php echo $client->getFromCompany(); ?></span>
                         </span>
                         <p style="color:black;">
                             inscrit le
@@ -114,12 +121,17 @@ $this->beginSection();
                     </div>
                     <div class="row">
                         <h5>Coordonnées...</h5>
-                        <div class="input-field col s6">
+                        <div class="input-field col s4">
                             <i class="material-icons prefix teal-text">near_me</i>
                             <input id="address" name="address" type="text" class="validate" value="<?php echo isset($_POST["address"]) ? $_POST["address"] : ""; ?>" required>
                             <label for="address">Adresse*</label>
                         </div>
-                        <div class="input-field col s6">
+                        <div class="input-field col s4">
+                            <i class="material-icons prefix teal-text">near_me</i>
+                            <input id="zipcode" name="zipcode" type="text" class="validate" value="<?php echo isset($_POST["zipcode"]) ? $_POST["zipcode"] : ""; ?>" required>
+                            <label for="zipcode">Code Postal*</label>
+                        </div>
+                        <div class="input-field col s4">
                             <i class="material-icons prefix teal-text">near_me</i>
                             <input id="city" name="city" type="text" class="validate" value="<?php echo isset($_POST["city"]) ? $_POST["city"] : ""; ?>" required>
                             <label for="city">Ville*</label>

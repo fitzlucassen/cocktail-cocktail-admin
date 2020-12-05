@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     $('#openModal').click(function () {
         $('#itsPersonal').prop('checked', true);
-        $('input').val('');
+        $('input[type="text"], input[type="email"], input[type="tel"], input[type="hidden"]').val('');
         $('.company-fields').hide();
 
         M.updateTextFields();
@@ -60,6 +60,7 @@ $(document).ready(function () {
                 $('#firstname').val(data.user.firstname);
                 $('#lastname').val(data.user.lastname);
                 $('#address').val(data.user.address);
+                $('#zipcode').val(data.user.zipcode);
                 $('#city').val(data.user.city);
                 $('#companyName').val(data.user.companyName);
                 $('#companySiret').val(data.user.companySiret);

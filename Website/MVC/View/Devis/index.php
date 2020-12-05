@@ -23,6 +23,14 @@ $this->beginSection();
             <div class="collection">
                 <?php
                 foreach ($this->Model->_devis as $devis) {
+                    $fromCompany = $devis["fromCompany"];
+                    $color = "#736357";
+
+                    if(strpos($fromCompany, "Cocktail") !== false)
+                        $color = "#0d751e";
+                    else if(strpos($fromCompany, "Terrasses") !== false)
+                        $color = "#1d064b";
+
                     $message = $devis["message"];
                     $length = strlen($message);
                     ?>
@@ -32,7 +40,7 @@ $this->beginSection();
                             <b>
                                 <?php echo $devis["isCompany"] ? $devis["companyName"] : $devis["firstname"] . " " . $devis["lastname"]; ?>
                             </b>
-                            <span class="new badge" data-badge-caption=""><?php echo $devis["fromCompany"]; ?></span>
+                            <span class="new badge" style="background:<?php echo $color; ?>" data-badge-caption=""><?php echo $devis["fromCompany"]; ?></span>
                         </span>
                         <p style="color:black;">
                             reçu le

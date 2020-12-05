@@ -42,6 +42,17 @@
 			}
 		}
 		
+		public function add($properties) {
+			$query = $this->_queryBuilder->insert("user", array('isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'address' => $properties["address"], 'zipcode' => $properties["zipcode"], 'city' => $properties["city"], 'isActive' => $properties["isActive"], 'fromCompany' => $properties["fromCompany"], 'creationDate' => $properties["creationDate"]))->getQuery();
+			try {
+				return $this->_pdo->Query($query);
+			}
+			catch(\PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
+		
 		public function update($id, $properties) {
 			$array = [
 				'isCompany' => $properties["isCompany"], 
@@ -52,6 +63,7 @@
 				'phoneNumber' => $properties["phoneNumber"], 
 				'email' => $properties["email"], 
 				'address' => $properties["address"], 
+				'zipcode' => $properties["zipcode"], 
 				'city' => $properties["city"], 
 				'isActive' => $properties["isActive"], 
 				'fromCompany' => $properties["fromCompany"], 

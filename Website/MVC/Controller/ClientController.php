@@ -47,6 +47,7 @@ class ClientController extends Controller
 				"companySiret" => $user->getCompanySiret(),
 				"phoneNumber" => $user->getPhoneNumber(),
 				"address" => $user->getAddress(),
+				"zipcode" => $user->getZipcode(),
 				"city" => $user->getCity(),
 				"email" => $user->getEmail(),
 			)
@@ -75,11 +76,11 @@ class ClientController extends Controller
 				$userRepository->createPassword($data["id"], $password);
 
 				$Email = new Helper\Email();
-	
+
 				// On configure l'email
 				$Email->from("contact@cocktailcocktail.fr")
 						->to($user->getEmail())
-						->subject($user->getFromcompany() . " vous crée un compte client")
+						->subject($user->getFromcompany() . " vous a créé un compte client")
 						->fromName($user->getFromcompany())
 						->layout("email")
 						->view("default")
@@ -121,9 +122,8 @@ class ClientController extends Controller
 				$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
 				$data["isActive"] = 0;
 				$data["isCompany"] = $data["isCompany"] == "1" ? 1 : 0;
-				// Process request...
-
 				$userRepository = $this->_repositoryManager->get('User');
+
 				$userRepository->add($data);
 			} else {
 				$Model->_message = "Un problème est survenue, veuillez remplir tous les champs marqués d'une étoile";
