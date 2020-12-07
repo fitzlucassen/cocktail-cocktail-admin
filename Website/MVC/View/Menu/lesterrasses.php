@@ -32,6 +32,7 @@ $this->beginSection();
                                     <?php echo $category->getName(); ?>
                                 </b>
                             </span>
+                            <span class="secondary-content edit-category" style="top:10px;right:50px;"><i class="material-icons">edit</i></span>
                             <span class="secondary-content delete-category" style="top:10px;"><i class="material-icons">delete</i></span>
                         </a>
                     <?php

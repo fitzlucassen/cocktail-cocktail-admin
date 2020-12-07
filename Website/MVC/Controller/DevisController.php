@@ -68,7 +68,7 @@ class DevisController extends Controller
 			"isCommand" => $request->getIscommand(),
 			"creationDate" => $request->getCreationdate(),
 			"zone" => $request->getZone(),
-			"zipcode" => $request->getEventzipcode(),
+			"eventZipcode" => $request->getEventzipcode(),
 			"cart" => []
 		];
 		
@@ -124,6 +124,7 @@ class DevisController extends Controller
 		if(isset($userId) && !empty($userId)){
 			$user = $userRepository->getById($userId);
 
+			$currentDevis["userId"] = $userId;
 			$currentDevis["isCompany"] = $user->getIscompany();
 			$currentDevis["companyName"] = $user->getCompanyname();
 			$currentDevis["companySiret"] = $user->getCompanySiret();
@@ -134,7 +135,7 @@ class DevisController extends Controller
 			$currentDevis["fromCompany"] = $user->getFromcompany();
 			$currentDevis["address"] = $user->getAddress();
 			$currentDevis["city"] = $user->getCity();
-			$currentDevis["isCommand"] = true;
+			$currentDevis["zipcode"] = $user->getZipcode();
 		}
 
 		return $currentDevis;
@@ -164,6 +165,9 @@ class DevisController extends Controller
 		$id = $params[0];
 		$currentDevis = $this->GetDataFromRequest($id);
 
+		$currentDevis['creationTime'] = explode(' ', $currentDevis['creationDate'])[1];
+		$currentDevis['creationDateDate'] = explode(' ', $currentDevis['creationDate'])[0];
+
 		$Model = new Model\WebserviceModel($this->_repositoryManager);
 
 		// Process request...
@@ -177,5 +181,48 @@ class DevisController extends Controller
 		$this->setController('webservice');
 		$this->setAction('index');
 		$this->_view->view($Model, 'json');
+	}
+
+	public function CreateClient($params){
+		$id = $params[0];
+		$currentDevis = $this->GetDataFromRequest($id);
+
+		$data = [
+			"address" => $this->IsNullOrEmpty($currentDevis['address']) ? "" : $currentDevis['address'],
+			"zipcode" => $this->IsNullOrEmpty($currentDevis['zipcode']) ? "" : $currentDevis['zipcode'],
+			"city" => $this->IsNullOrEmpty($currentDevis['city']) ? "" : $currentDevis['city'],
+			"fromCompany" => $this->IsNullOrEmpty($currentDevis['fromCompany']) ? "" : $currentDevis['fromCompany'],
+			"isCompany" => $currentDevis['isCompany'] == 1 ? 1 : 0,
+			"companyName" => $this->IsNullOrEmpty($currentDevis['companyName']) ? "" : $currentDevis['companyName'],
+			"companySiret" => $this->IsNullOrEmpty($currentDevis['companySiret']) ? "" : $currentDevis['companySiret'],
+			"firstname" => $this->IsNullOrEmpty($currentDevis['firstname']) ? "" : $currentDevis['firstname'],
+			"lastname" => $this->IsNullOrEmpty($currentDevis['lastname']) ? "" : $currentDevis['lastname'],
+			"phoneNumber" => $this->IsNullOrEmpty($currentDevis['phoneNumber']) ? "" : $currentDevis['phoneNumber'],
+			"email" => $this->IsNullOrEmpty($currentDevis['email']) ? "" : $currentDevis['email'],
+			"isActive" => 0,
+			"creationDate" => $this->IsNullOrEmpty($currentDevis['creationDate']) ? "" : $currentDevis['creationDate']
+		];
+
+		$userRepository = $this->_repositoryManager->get('User');
+		$devisRepository = $this->_repositoryManager->get('Request');
+		
+		$userId = $userRepository->add($data);
+		$devisRepository->addUserId($id, $userId);
+
+		$Model = new Model\WebserviceModel($this->_repositoryManager);
+
+		// Process request...
+		$Model->result = array(
+			'userId' => $userId
+		);
+		$Model->result = json_encode($Model->result);
+		$this->setLayout('json');
+		$this->setController('webservice');
+		$this->setAction('index');
+		$this->_view->view($Model, 'json');
+	}
+
+	function IsNullOrEmpty($str){
+		return (!isset($str) || trim($str) === '');
 	}
 }

@@ -62,9 +62,15 @@ $this->beginSection();
     <div id="modal1" class="modal">
         <div class="modal-content">
             <h4>Gérer une demande de devis</h4>
+            <p style="position: absolute; top: 10px;right:10px;">
+                <a class="waves-effect waves-light btn" href="" id="createUser">Créer un client à partir de ce devis</a>
+            </p>
+            <br/>
+            <br/>
+
             <div class="row">
                 <p class="col s8">
-                    Demande <b id="isCompany"></b>&nbsp;<b id="name"></b> reçu le <b id="creationDate"></b>
+                    Demande <u id="isCompany"></u>&nbsp;<b id="name"></b> reçu le <b id="creationDate"></b>
                 </p>
                 <p class="col s4">Client du site <b id="fromCompany"></b></p>
             </div>
@@ -74,13 +80,13 @@ $this->beginSection();
             </div>
             
             <div class="row" id="eventData">
-                <p class="s12"><b>Données de l'évenement :</b></p>
+                <h5 class="s12"><b>1. Données de l'évenement</b></h5>
                 <p class="col s4 center-align" id="eventDate"></p>
                 <p class="col s4 center-align" id="people"></p>
                 <p class="col s4 center-align" id="eventZipcodeZone"></p>
             </div>
             <div class="row" style="margin-bottom: 0;">
-                <p class="s12"><b>Pour contacter ce client :</b></p>
+                <h5 class="s12"><b>2. Pour contacter ce client</b></h5>
                 <p class="col s6 center-align" id="phoneNumber"></p>
                 <p class="col s6 center-align" id="email"></p>
             </div>

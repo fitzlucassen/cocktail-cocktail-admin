@@ -6,6 +6,9 @@ $(document).ready(function () {
         $('input[type="text"], input[type="email"], input[type="tel"], input[type="hidden"]').val('');
         $('.company-fields').hide();
 
+        $('.modal h4').html('Créer un nouveau client');
+        $('.modal form').attr('action', '/client/add');
+
         M.updateTextFields();
     });
     $('#itsCompany').click(function () {
@@ -19,9 +22,9 @@ $(document).ready(function () {
         e.preventDefault();
         e.stopPropagation();
 
-        if($(this).prop('checked') && !confirm("êtes-vous sur de vouloir faire de ce client un client vérifié ? Ces devis deviendront automatiquement des commandes."))
+        if ($(this).prop('checked') && !confirm("êtes-vous sur de vouloir faire de ce client un client vérifié ? Ces devis deviendront automatiquement des commandes."))
             return false;
-        else if(!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir faire de ce client un client normal ? Ces devis deviendront ne seront plus des commandes."))
+        else if (!$(this).prop('checked') && !confirm("êtes-vous sur de vouloir faire de ce client un client normal ? Ces devis deviendront ne seront plus des commandes."))
             return false;
 
         var element = $(this);

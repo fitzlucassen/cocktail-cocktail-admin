@@ -315,4 +315,34 @@ class MenuService {
         })
             .always(function () { });
     }
+    updateCategory(categoryId, categoryName, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: "/menu/updateCategory",
+            dataType: "json",
+            data: {
+                name: categoryName,
+                id_Category: categoryId
+            }
+        }).done(function (data) {
+            successCallback(data);
+        }).fail(function () {
+            alert('Something wrong happened... try later');
+        }).always(function () { });
+    }
+    updateLesTerrassesCategory(categoryId, categoryName, successCallback) {
+        $.ajax({
+            method: "POST",
+            url: "/menu/updateLesTerrassesCategory",
+            dataType: "json",
+            data: {
+                name: categoryName,
+                id_Category: categoryId
+            }
+        }).done(function (data) {
+            successCallback(data);
+        }).fail(function () {
+            alert('Something wrong happened... try later');
+        }).always(function () { });
+    }
 }

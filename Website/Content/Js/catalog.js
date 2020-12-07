@@ -26,7 +26,9 @@ $(document).ready(function () {
     /* **************
      * READ FUNCTIONS
      * **************/
-    $('#catalog-page #second-column').on('click', '.category', function () {
+    $('#catalog-page #second-column').on('click', '.category', function (e) {
+        if($(e.target).parent().hasClass('edit-category'))
+            return;
         var id = $(this).attr('data-id');
 
         $('#first-column').html($('#second-column').html());
@@ -40,7 +42,9 @@ $(document).ready(function () {
         });
     });
 
-    $('#catalog-page #first-column').on('click', '.category', function () {
+    $('#catalog-page #first-column').on('click', '.category', function (e) {
+        if($(e.target).parent().hasClass('edit-category'))
+            return;
         var id = $(this).attr('data-id');
         $('#second-column').html($('#third-column').html());
         $('#second-column').removeClass('m3').addClass('m6');
@@ -298,6 +302,21 @@ $(document).ready(function () {
         }).fail(function () {
             alert('Something wrong happened... try later');
         }).always(function () { });
+    });
+
+    $('#catalog-page').on('click', '.edit-category', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var categoryName = prompt("Nouveau nom de la catégorie ?")
+        var container = $(this).parent().parent();
+        var categoryId = $(this).parent().attr('data-id');
+
+        if (categoryName != null) {
+            service.updateCategory(categoryId, categoryName, function (data) {
+                view.appendCategories(data, container);
+            });
+        }
     });
 
     $('#catalog-page .col').on('click', '.meal-menu .activate', function (e) {

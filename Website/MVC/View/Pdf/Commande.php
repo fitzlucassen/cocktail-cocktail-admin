@@ -49,7 +49,7 @@
         <tr>
             <td class="70p">
                 <strong><?php echo $this->Model['firstname']." ".$this->Model['lastname']; ?></strong><br />
-                <?php echo nl2br($this->Model['address']); ?><br/><?php echo nl2br($this->Model['city']); ?><br />
+                <?php echo nl2br($this->Model['address']); ?><br/><?php echo nl2br($this->Model['zipcode']) . ' ' . nl2br($this->Model['city']); ?><br />
                 <strong>SIRET:</strong> <?php echo $this->Model['companySiret']; ?><br />
                 <?php echo $this->Model['email'] . " / " . $this->Model['phoneNumber']; ?>
             </td>

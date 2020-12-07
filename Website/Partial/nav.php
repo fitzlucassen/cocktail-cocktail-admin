@@ -20,6 +20,7 @@
             <li class="<?php echo $controller == "devis" ? "active" : "" ?>"><a href="/devis">Devis</a></li>
             <li class="<?php echo $action == "cocktailcocktail" ? "active" : "" ?>"><a href="/menu/cocktailcocktail">Catalogue</a></li>
             <li class="<?php echo $action == "lesterrasses" ? "active" : "" ?>"><a href="/menu/lesterrasses">Menu restaurant</a></li>
+            <li class="<?php echo $controller == "news" ? "active" : "" ?>"><a href="/news">Actualités</a></li>
         </ul>
     </div>
 </nav>
@@ -30,4 +31,5 @@
     <li><a href="/devis">Devis</a></li>
     <li><a href="/menu/cocktailcocktail">Catalogue</a></li>
     <li><a href="/menu/lesterrasses">Menu restaurant</a></li>
+    <li><a href="/news">Actualités</a></li>
 </ul>

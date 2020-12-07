@@ -32,6 +32,7 @@ $this->beginSection();
                                     <?php echo $category->getName(); ?>
                                 </b>
                             </span>
+                            <span class="secondary-content edit-category" style="top:10px;right:50px;"><i class="material-icons">edit</i></span>
                             <span class="secondary-content delete-category" style="top:10px;"><i class="material-icons">delete</i></span>
                         </a>
                     <?php
@@ -69,6 +70,7 @@ $this->beginSection();
                         </div>
                     </div>
                     <div class="row">
+                        <p class="col s12 center"><i>La photo doit être rectangulaire au format paysage. Le site est optimisé pour un <b>format 16:9 (exemple : 3840x2160)</b></i></p>
                         <div class="file-field input-field col s12">
                             <div class="btn">
                                 <span>Photo du menu</span>

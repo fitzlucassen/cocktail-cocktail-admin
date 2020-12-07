@@ -640,6 +640,69 @@ class MenuController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
+	
+	public function UpdateCategory()
+	{
+		$Model = new Model\WebserviceModel($this->_repositoryManager);
+
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+
+			$categoryRepository = $this->_repositoryManager->get('Cocktailcocktailcategories');
+
+			$categoryRepository->updateCategoryName($data['id_Category'], $data['name']);
+			$categories = Repository\CocktailcocktailcategoriesRepository::getAll($this->_repositoryManager->getConnection());
+
+			// Process request...
+			$Model->result = array();
+
+			foreach ($categories as $category) {
+				array_push($Model->result, array(
+					"id" => $category->getId(),
+					"name" => $category->getName()
+				));
+			}
+		}
+
+		$Model->result = json_encode($Model->result);
+
+		$this->setLayout('json');
+		$this->setController('webservice');
+		$this->setAction('index');
+		$this->_view->view($Model, 'json');
+	}
+
+	public function UpdateLesTerrassesCategory()
+	{
+		$Model = new Model\WebserviceModel($this->_repositoryManager);
+
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+
+			$categoryRepository = $this->_repositoryManager->get('Lesterrassescategories');
+
+			$categoryRepository->update($data['id_Category'], $data);
+			$categories = Repository\LesterrassescategoriesRepository::getAll($this->_repositoryManager->getConnection());
+
+			// Process request...
+			$Model->result = array();
+
+			foreach ($categories as $category) {
+				array_push($Model->result, array(
+					"id" => $category->getId(),
+					"name" => $category->getName()
+				));
+			}
+		}
+
+		$Model->result = json_encode($Model->result);
+
+		$this->setLayout('json');
+		$this->setController('webservice');
+		$this->setAction('index');
+		$this->_view->view($Model, 'json');
+	}
+
 	public function Activate()
 	{
 		if (Core\Request::isPost() || Core\Request::isPost()) {

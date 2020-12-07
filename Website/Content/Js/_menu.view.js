@@ -7,6 +7,9 @@ class MenuView {
         data.forEach(function (element) {
             html += '<a href="#!" class="collection-item avatar category" data-id="' + element.id + '" style="min-height: auto;">' +
                 '<span class="title"><b>' + element.name + '</b></span>' +
+                '<span class="secondary-content edit-category" style="top:10px;right:50px;">' +
+                '<i class="material-icons">edit</i>' +
+                '</span>' +
                 '<span class="secondary-content delete-category" style="top:10px;">' +
                 '<i class="material-icons">delete</i>' +
                 '</span></a>';

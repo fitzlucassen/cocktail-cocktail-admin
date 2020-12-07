@@ -43,9 +43,27 @@
 		}
 		
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("user", array('isCompany' => $properties["isCompany"], 'companyName' => $properties["companyName"], 'companySiret' => $properties["companySiret"], 'firstname' => $properties["firstname"], 'lastname' => $properties["lastname"], 'phoneNumber' => $properties["phoneNumber"], 'email' => $properties["email"], 'address' => $properties["address"], 'zipcode' => $properties["zipcode"], 'city' => $properties["city"], 'isActive' => $properties["isActive"], 'fromCompany' => $properties["fromCompany"], 'creationDate' => $properties["creationDate"]))->getQuery();
+			$array = array(
+				'isCompany' => $properties["isCompany"], 
+				'companyName' => $properties["companyName"], 
+				'companySiret' => $properties["companySiret"], 
+				'firstname' => $properties["firstname"], 
+				'lastname' => $properties["lastname"], 
+				'phoneNumber' => $properties["phoneNumber"], 
+				'email' => $properties["email"], 
+				'address' => $properties["address"], 
+				'city' => $properties["city"], 
+				'isActive' => $properties["isActive"], 
+				'fromCompany' => $properties["fromCompany"], 
+				'creationDate' => $properties["creationDate"]);
+			
+			if(strlen($properties['zipcode']) > 0)
+				$array['zipcode'] = $properties['zipcode'];
+
+			$query = $this->_queryBuilder->insert("user", $array)->getQuery();
 			try {
-				return $this->_pdo->Query($query);
+				$result = $this->_pdo->Query($query);
+				return $this->_pdo->lastInsertId();
 			}
 			catch(\PDOException $e){
 				print $e->getMessage();
