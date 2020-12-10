@@ -2,7 +2,8 @@ $(document).ready(function () {
     $('#openModal').click(function () {
         $('input[type="text"], input[type="email"], input[type="tel"], input[type="hidden"]').val('');
         $('textarea').html('');
-
+        $('textarea').val('');
+        $('#newsImage').attr('src', '');
         $('.modal h4').html('Créer une actualité');
         $('.modal form').attr('action', '/news/add');
 
@@ -26,6 +27,7 @@ $(document).ready(function () {
                 $('#itsMt').prop('checked', data.news.fromCompany == 'Mets-Tendances');
                 $('#itsCc').prop('checked', data.news.fromCompany == 'Cocktail-Cocktail');
                 $('#itsTc').prop('checked', data.news.fromCompany == 'Les Terrasses de Courbevoie');
+                $('#newsImage').attr('src', data.news.image_url);
 
                 M.updateTextFields();
 

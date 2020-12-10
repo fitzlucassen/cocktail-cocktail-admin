@@ -36,6 +36,13 @@ $this->beginSection();
                 <div class="collection">
                     <?php
                     foreach ($this->Model->_news as $news) {
+                        $fromCompany = $news->getFromCompany();
+                        $color = "#736357";
+
+                        if(strpos($fromCompany, "Cocktail") !== false)
+                            $color = "#0d751e";
+                        else if(strpos($fromCompany, "Terrasses") !== false)
+                            $color = "#1d064b";
                     ?>
                         <a href="#!" class="collection-item avatar valign-wrapper" data-id="<?php echo $news->getId(); ?>">
                             <i class="material-icons circle">radio</i>
@@ -70,7 +77,7 @@ $this->beginSection();
         <div class="modal-content">
             <h4>Créer une actualité</h4>
             <div class="row" style="margin-bottom: 0;">
-                <form action="/news/add" method="POST" class="col s12">
+                <form action="/news/add" method="POST" class="col s12" enctype="multipart/form-data">
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix teal-text">title</i>
@@ -78,12 +85,27 @@ $this->beginSection();
                             <label for="title">Titre*</label>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix teal-text">text_fields</i>
                             <textarea id="description" name="description" class="materialize-textarea validate"></textarea>
                             <label for="description">description*</label>
                         </div>
+                    </div>
+
+                    <div class="row">
+                        <p class="col s12 center"><i>La photo doit être rectangulaire au format paysage. Le site est optimisé pour un <b>format 16:9 (exemple : 3840x2160)</b></i></p>
+                        <div class="file-field input-field col s12">
+                            <div class="btn">
+                                <span>Photo de l'actualité (optionnel)</span>
+                                <input type="file" id="file" name="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Illustrez l'actualité par une photo (optionnel)">
+                            </div>
+                        </div>
+                        <img src="" alt="" id="newsImage" style="display: block; width: 50%;margin:20px auto;" />
                     </div>
 
                     <div class="row">

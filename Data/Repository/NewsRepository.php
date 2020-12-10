@@ -16,4 +16,39 @@
 			parent::__construct($pdo, $lang);
 		}
 
+		public function add($properties) {
+			$array = [
+				'title' => $properties["title"], 'description' => $properties["description"], 'fromCompany' => $properties["fromCompany"], 'creationDate' => $properties["creationDate"]
+			];
+			if(isset($properties["image_url"]))
+				$array['image_url'] = $properties["image_url"];
+
+			$query = $this->_queryBuilder->insert("news", $array)->getQuery();
+			try {
+				$result = $this->_pdo->Query($query);
+				return $this->_pdo->lastInsertId();
+			}
+			catch(\PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
+
+		public function update($id, $properties) {
+			$array = [
+				'title' => $properties["title"], 'description' => $properties["description"], 'fromCompany' => $properties["fromCompany"]
+			];
+			if(isset($properties["image_url"]))
+				$array['image_url'] = $properties["image_url"];
+
+			$query = $this->_queryBuilder->update("news", $array)->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			try {
+				return $this->_pdo->Query($query);
+			}
+			catch(\PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
+
 	}

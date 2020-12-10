@@ -59,19 +59,32 @@ class NewsController extends Controller
 			"title" => $news->getTitle(),
 			"description" => $news->getDescription(),
 			"creationDate" => $news->getCreationdate(),
-			"fromCompany" => $news->getFromcompany()
+			"fromCompany" => $news->getFromcompany(),
+			"image_url" => $news->getImage_url()
 		];
 	}
 
 	public function Add() {
 		$Model = new Model\HomeModel($this->_repositoryManager);
+		$name = "";
 
+		if (Core\Request::isFile()) {
+			// Initialize the upload helper with the upload directory path
+			$Upload = new Helper\Upload("upload_test");
+			// Give the file and then upload
+			$Upload->file($_FILES["file"]);
+			$Upload->upload();
+
+			$name = $_FILES["file"]["name"];
+		}
 		if (Core\Request::isPost() || Core\Request::isPost()) {
 			// It's a form validation
 			// Clean all vars
 			$data = Core\Request::cleanRequest();
-
 			$newsRepository = $this->_repositoryManager->get('News');
+
+			if(!empty($name))
+				$data['image_url'] = "/upload_test/" . $name;
 
 			$data["creationDate"] = (new \DateTime())->format('Y-m-d H:i:s');
 			$newsRepository->add($data);
@@ -89,11 +102,25 @@ class NewsController extends Controller
 	public function Update()
 	{
 		$Model = new Model\HomeModel($this->_repositoryManager);
+		$name = "";
+
+		if (Core\Request::isFile()) {
+			// Initialize the upload helper with the upload directory path
+			$Upload = new Helper\Upload("upload_test");
+			// Give the file and then upload
+			$Upload->file($_FILES["file"]);
+			$Upload->upload();
+
+			$name = $_FILES["file"]["name"];
+		}
 
 		if (Core\Request::isPost() || Core\Request::isPost()) {
 			// It's a form validation
 			// Clean all vars
 			$data = Core\Request::cleanRequest();
+
+			if(!empty($name))
+				$data['image_url'] = "/upload_test/" . $name;
 
 			$newsRepository = $this->_repositoryManager->get('News');
 			$newsRepository->update((int)$data["id"], $data);

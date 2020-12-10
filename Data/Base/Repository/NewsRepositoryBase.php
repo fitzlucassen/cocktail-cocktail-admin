@@ -93,7 +93,7 @@
 		}
 
 		public function add($properties) {
-			$query = $this->_queryBuilder->insert("news", array('title' => $properties["title"], 'description' => $properties["description"], 'creationDate' => $properties["creationDate"], 'fromCompany' => $properties["fromCompany"], ))->getQuery();
+			$query = $this->_queryBuilder->insert("news", array('title' => $properties["title"], 'description' => $properties["description"], 'image_url' => $properties["image_url"], 'creationDate' => $properties["creationDate"], 'fromCompany' => $properties["fromCompany"], ))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}
@@ -104,7 +104,7 @@
 		}
 
 		public function update($id, $properties) {
-			$query = $this->_queryBuilder->update("news", array('title' => $properties["title"], 'description' => $properties["description"], 'creationDate' => $properties["creationDate"], 'fromCompany' => $properties["fromCompany"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
+			$query = $this->_queryBuilder->update("news", array('title' => $properties["title"], 'description' => $properties["description"], 'image_url' => $properties["image_url"], 'creationDate' => $properties["creationDate"], 'fromCompany' => $properties["fromCompany"], ))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id )))->getQuery();
 			try {
 				return $this->_pdo->Query($query);
 			}

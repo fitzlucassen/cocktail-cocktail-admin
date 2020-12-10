@@ -13,13 +13,14 @@
 		private $_id;
 		private $_title;
 		private $_description;
+		private $_image_url;
 		private $_creationDate;
 		private $_fromCompany;
 		private $_queryBuilder;
 
-		public function __construct($id = '', $title = '', $description = '', $creationDate = '', $fromCompany = ''){
+		public function __construct($id = '', $title = '', $description = '', $image_url = '', $creationDate = '', $fromCompany = ''){
 			$this->_queryBuilder = new Core\QueryBuilder(true);
-			$this->fillObject(array("id" => $id, "title" => $title, "description" => $description, "creationDate" => $creationDate, "fromCompany" => $fromCompany));
+			$this->fillObject(array("id" => $id, "title" => $title, "description" => $description, "image_url" => $image_url, "creationDate" => $creationDate, "fromCompany" => $fromCompany));
 		}
 
 		/***********
@@ -33,6 +34,9 @@
 		}
 		public function getDescription() {
 			return $this->_description;
+		}
+		public function getImage_url() {
+			return $this->_image_url;
 		}
 		public function getCreationDate() {
 			return $this->_creationDate;
@@ -51,6 +55,8 @@
 				$this->_title = $properties["title"];
 			if(!empty($properties["description"]))
 				$this->_description = $properties["description"];
+			if(!empty($properties["image_url"]))
+				$this->_image_url = $properties["image_url"];
 			if(!empty($properties["creationDate"]))
 				$this->_creationDate = $properties["creationDate"];
 			if(!empty($properties["fromCompany"]))
