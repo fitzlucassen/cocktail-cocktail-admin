@@ -50,11 +50,15 @@ $this->beginSection();
                     }
                     ?>
                 </div>
-                <a class="btn-floating halfway-fab waves-effect waves-light red zipcodezone-add"><i class="material-icons">add</i></a>
             </div>
         </div>
     </div>
 
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red pulse modal-trigger zipcodezone-add">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
 
     <!-- Modal Structure -->
     <div id="modal-zipcodezone" class="modal">

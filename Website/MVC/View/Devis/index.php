@@ -34,7 +34,7 @@ $this->beginSection();
                     $message = $devis["message"];
                     $length = strlen($message);
                     ?>
-                    <a href="#!" class="collection-item avatar valign-wrapper" data-id="<?php echo $devis["id"]; ?>">
+                    <a href="#!" class="collection-item avatar valign-wrapper" data-id="<?php echo $devis["id"]; ?>" style="<?php echo $devis['isProcessed'] ? "background: #ccc" : ""; ?>">
                         <i class="material-icons circle">folder</i>
                         <span class="title">
                             <b>
@@ -48,7 +48,17 @@ $this->beginSection();
                                 <?php echo $devis["creationDate"]; ?>
                             </b><br />
                             <span><?php echo ($length > 100 ? substr($message, 0, 100) . '...' : $message); ?></span>
+                            <!-- Switch -->
+                            <div class="switch">
+                                <label>
+                                    Devis non traité
+                                    <input type="checkbox" <?php echo $devis['isProcessed'] ? "checked" : "" ?> class="activate" data-id="<?php echo $devis["id"]; ?>">
+                                    <span class="lever"></span>
+                                    Devis traité
+                                </label>
+                            </div>
                         </p>
+                        <span class="secondary-content delete-devis" style="top: 40px;"><i class="material-icons">delete</i></span>
                     </a>
                 <?php
                 }

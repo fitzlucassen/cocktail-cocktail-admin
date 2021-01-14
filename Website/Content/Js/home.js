@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('.company-fields').hide();
 
-    $('#openModal').click(function () {
+    $('#client-page #openModal').click(function () {
         $('#itsPersonal').prop('checked', true);
         $('input[type="text"], input[type="email"], input[type="tel"], input[type="hidden"]').val('');
         $('.company-fields').hide();

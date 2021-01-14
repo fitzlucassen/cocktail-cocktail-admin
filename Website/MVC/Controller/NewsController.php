@@ -134,4 +134,26 @@ class NewsController extends Controller
 
 		Core\Request::redirectTo("/news");
 	}
+
+	public function Delete(){
+		$Model = new Model\WebserviceModel($this->_repositoryManager);
+
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+
+			$newsRepository = $this->_repositoryManager->get('News');
+
+			$newsRepository->delete((int) $data["id_News"]);
+
+			// Process request...
+			$Model->result = array();
+		}
+
+		$Model->result = json_encode($Model->result);
+
+		$this->setLayout('json');
+		$this->setController('webservice');
+		$this->setAction('index');
+		$this->_view->view($Model, 'json');
+	}
 }

@@ -28,11 +28,12 @@
 		private $_people;
 		private $_isCommand;
 		private $_creationDate;
+		private $_isProcessed;
 		private $_queryBuilder;
 
-		public function __construct($id = '', $id_User = '', $isCompany = '', $companyName = '', $companySiret = '', $firstname = '', $lastname = '', $phoneNumber = '', $email = '', $fromCompany = '', $message = '', $zone = '', $eventZipcode = '', $eventDate = '', $eventTime = '', $people = '', $isCommand = '', $creationDate = ''){
+		public function __construct($id = '', $id_User = '', $isCompany = '', $companyName = '', $companySiret = '', $firstname = '', $lastname = '', $phoneNumber = '', $email = '', $fromCompany = '', $message = '', $zone = '', $eventZipcode = '', $eventDate = '', $eventTime = '', $people = '', $isCommand = '', $creationDate = '', $isProcessed = ''){
 			$this->_queryBuilder = new Core\QueryBuilder(true);
-			$this->fillObject(array("id" => $id, "id_User" => $id_User, "isCompany" => $isCompany, "companyName" => $companyName, "companySiret" => $companySiret, "firstname" => $firstname, "lastname" => $lastname, "phoneNumber" => $phoneNumber, "email" => $email, "fromCompany" => $fromCompany, "message" => $message, "zone" => $zone, "eventZipcode" => $eventZipcode, "eventDate" => $eventDate, "eventTime" => $eventTime, "people" => $people, "isCommand" => $isCommand, "creationDate" => $creationDate));
+			$this->fillObject(array("id" => $id, "id_User" => $id_User, "isCompany" => $isCompany, "companyName" => $companyName, "companySiret" => $companySiret, "firstname" => $firstname, "lastname" => $lastname, "phoneNumber" => $phoneNumber, "email" => $email, "fromCompany" => $fromCompany, "message" => $message, "zone" => $zone, "eventZipcode" => $eventZipcode, "eventDate" => $eventDate, "eventTime" => $eventTime, "people" => $people, "isCommand" => $isCommand, "creationDate" => $creationDate, "isProcessed" => $isProcessed));
 		}
 
 		/***********
@@ -92,6 +93,9 @@
 		public function getCreationDate() {
 			return $this->_creationDate;
 		}
+		public function getIsProcessed() {
+			return $this->_isProcessed;
+		}
 		/*******
 		 * END *
 		 *******/
@@ -133,5 +137,7 @@
 				$this->_isCommand = $properties["isCommand"];
 			if(!empty($properties["creationDate"]))
 				$this->_creationDate = $properties["creationDate"];
+			if(!empty($properties["isProcessed"]))
+				$this->_isProcessed = $properties["isProcessed"];
 		}
 	}

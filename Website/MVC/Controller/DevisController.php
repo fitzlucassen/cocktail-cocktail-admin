@@ -69,6 +69,7 @@ class DevisController extends Controller
 			"creationDate" => $request->getCreationdate(),
 			"zone" => $request->getZone(),
 			"eventZipcode" => $request->getEventzipcode(),
+			"isProcessed" => $request->getIsprocessed(),
 			"cart" => []
 		];
 		
@@ -138,6 +139,8 @@ class DevisController extends Controller
 			$currentDevis["zipcode"] = $user->getZipcode();
 		}
 
+		$currentDevis["zipcode"] = isset($currentDevis["zipcode"]) && !empty($currentDevis["zipcode"]) ? $currentDevis["zipcode"] : $currentDevis["eventZipcode"];
+
 		return $currentDevis;
 	}
 
@@ -183,6 +186,30 @@ class DevisController extends Controller
 		$this->_view->view($Model, 'json');
 	}
 
+	public function Delete(){
+		$Model = new Model\WebserviceModel($this->_repositoryManager);
+
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+
+			$requestRepository = $this->_repositoryManager->get('Request');
+			$requestCartRepository = $this->_repositoryManager->get('Requestcart');
+
+			$requestCartRepository->deleteByRequestId((int) $data["id_Devis"]);
+			$requestRepository->delete((int) $data["id_Devis"]);
+
+			// Process request...
+			$Model->result = array();
+		}
+
+		$Model->result = json_encode($Model->result);
+
+		$this->setLayout('json');
+		$this->setController('webservice');
+		$this->setAction('index');
+		$this->_view->view($Model, 'json');
+	}
+
 	public function CreateClient($params){
 		$id = $params[0];
 		$currentDevis = $this->GetDataFromRequest($id);
@@ -216,6 +243,24 @@ class DevisController extends Controller
 			'userId' => $userId
 		);
 		$Model->result = json_encode($Model->result);
+		$this->setLayout('json');
+		$this->setController('webservice');
+		$this->setAction('index');
+		$this->_view->view($Model, 'json');
+	}
+
+	public function Process(){
+		if (Core\Request::isPost() || Core\Request::isPost()) {
+			$data = Core\Request::cleanRequest();
+			
+			$requestRepository = $this->_repositoryManager->get('Request');
+			$isActive = $data["isProcessed"] == "false" ? 0 : 1;
+
+			$requestRepository->processed($data["id"], $isActive);
+		}
+
+		$Model = new Model\WebserviceModel($this->_repositoryManager);
+		$Model->result = "{}";
 		$this->setLayout('json');
 		$this->setController('webservice');
 		$this->setAction('index');

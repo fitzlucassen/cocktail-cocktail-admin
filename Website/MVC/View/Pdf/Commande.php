@@ -77,7 +77,7 @@
                 <th class="20p">Menu</th>
                 <th class="60p">Plat</th>
                 <th class="10p">Quantité</th>
-                <th class="10p">Prix</th>
+                <th class="10p">Prix unitaire</th>
             </tr>
         </thead>
         <tbody>
@@ -91,7 +91,7 @@
                     <td style="width:10%;"><?php echo $meal['quantity']; ?></td>
 
                     <?php if($cpt): ?> 
-                        <td style="width:10%;" rowspan="<?php echo count($menu["meals"]); ?>"><?php echo $menu['price'];$total += $menu['price']; ?></td>
+                        <td style="width:10%;" rowspan="<?php echo count($menu["meals"]); ?>"><?php echo $menu['price'];$total += ($menu['price'] * $meal['quantity']); ?>€</td>
                     <?php $cpt = false; endif ?>
                 </tr>
             <?php endforeach ?>

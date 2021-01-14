@@ -48,7 +48,13 @@ $this->beginSection();
                             <i class="material-icons circle">radio</i>
                             <span class="title">
                                 <b>
-                                    <?php echo $news->getTitle(); ?>
+                                    <?php 
+                                        $title = $news->getTitle(); 
+                                        if(strlen($title) > 60) {
+                                            $title = substr($title, 0, 60) . '...';
+                                        }
+                                        echo $title;
+                                    ?>
                                 </b>
                                 <span class="new badge" style="background:<?php echo $color; ?>" data-badge-caption=""><?php echo $news->getFromCompany(); ?></span>
                             </span>
@@ -58,6 +64,7 @@ $this->beginSection();
                                     <?php echo $news->getCreationDate(); ?>
                                 </b>
                             </p>
+                            <span class="secondary-content delete-news" style="top: 40px;"><i class="material-icons">delete</i></span>
                         </a>
                     <?php } ?>
                 </div>

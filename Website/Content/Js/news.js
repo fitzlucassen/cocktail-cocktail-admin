@@ -1,5 +1,21 @@
 $(document).ready(function () {
-    $('#openModal').click(function () {
+    function deleteNews(element, id) {
+        if (confirm("Êtes-vous sur de vouloir supprimer cette actualité ?")) {
+            $.ajax({
+                method: "POST",
+                url: "/news/delete",
+                dataType: "json",
+                data: {
+                    id_News: id
+                }
+            }).done(function (data) {
+                element.remove();
+            }).fail(function () {
+                alert('Something wrong happened... try later');
+            }).always(function () { });
+        }
+    }
+    $('#news-page #openModal').click(function () {
         $('input[type="text"], input[type="email"], input[type="tel"], input[type="hidden"]').val('');
         $('textarea').html('');
         $('textarea').val('');
@@ -11,9 +27,16 @@ $(document).ready(function () {
     });
 
     $('#news-page .collection-item').click(function (e) {
+        var currentNewsId = $(this).attr('data-id');
+
+        if ($(e.target).closest('.delete-news').length > 0) {
+            deleteNews($(this), currentNewsId);
+            return false;
+        }
+
         $.ajax({
             method: "GET",
-            url: "/news/get/" + $(this).attr('data-id'),
+            url: "/news/get/" + currentNewsId,
             dataType: 'json',
             success: function (data) {
                 modal[0].open();

@@ -16,4 +16,16 @@
 			parent::__construct($pdo, $lang);
 		}
 
+		public function deleteByRequestId($id) {
+			$query = $this->_queryBuilder->delete("requestcart")
+											->where(array(array("link" => "", "left" => "id_Request", "operator" => "=", "right" => $id )))
+											->getQuery();
+			try {
+				return $this->_pdo->Query($query);
+			}
+			catch(\PDOException $e){
+				print $e->getMessage();
+			}
+			return array();
+		}
 	}

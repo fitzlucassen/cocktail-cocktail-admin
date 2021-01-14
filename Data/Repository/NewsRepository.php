@@ -25,6 +25,7 @@
 
 			$query = $this->_queryBuilder->insert("news", $array)->getQuery();
 			try {
+				var_dump($query);die;
 				$result = $this->_pdo->Query($query);
 				return $this->_pdo->lastInsertId();
 			}

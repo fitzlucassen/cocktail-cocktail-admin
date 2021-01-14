@@ -39,12 +39,27 @@ class RequestRepository extends RepositoryBase\RequestRepositoryBase
 		return array();
 	}
 
-	public static function addUserId($id, $userId)
+	public function addUserId($id, $userId)
 	{
 		$query = $this->_queryBuilder->update("request", array('id_User' => $userId))->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => $id)))->getQuery();
 		try {
 			return $this->_pdo->Query($query);
 		} catch (\PDOException $e) {
+			print $e->getMessage();
+		}
+		return array();
+	}
+
+	
+	public function processed($id, $active) {
+		$query = $this->_queryBuilder
+			->update("request", array('isProcessed' => $active))
+			->where(array(array("link" => "", "left" => "id", "operator" => "=", "right" => (int)$id )))
+			->getQuery();
+		try {
+			return $this->_pdo->Query($query);
+		}
+		catch(\PDOException $e){
 			print $e->getMessage();
 		}
 		return array();

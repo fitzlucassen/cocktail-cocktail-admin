@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var service = new MenuService();
 
-    $('#zipcodezone-page .col').on('click', '.zipcodezone-add', function () {
+    $('#zipcodezone-page').on('click', '.zipcodezone-add', function () {
         modal[0].open();
     });
 

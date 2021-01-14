@@ -13,8 +13,58 @@ $(document).ready(function () {
 
         return false;
     });
+
+    function deleteDevis(element, id) {
+        if (confirm("Êtes-vous sur de vouloir supprimer ce devis ?")) {
+            $.ajax({
+                method: "POST",
+                url: "/devis/delete",
+                dataType: "json",
+                data: {
+                    id_Devis: id
+                }
+            }).done(function (data) {
+                element.remove();
+            }).fail(function () {
+                alert('Something wrong happened... try later');
+            }).always(function () { });
+        }
+    }
+
+    function processDevis(id, isProcessed, element) {
+        if (!isProcessed && !confirm("êtes-vous sur de vouloir signaler comme traitée cette demande ?"))
+            return false;
+        else if (isProcessed && !confirm("êtes-vous sur de vouloir signaler comme NON traitée cette demande ?"))
+            return false;
+
+        $.ajax({
+            method: "POST",
+            url: "/devis/process",
+            dataType: "json",
+            data: {
+                id: id,
+                isProcessed: !isProcessed
+            }
+        }).done(function () {
+            element.prop('checked', !element.prop('checked'));
+        })
+        .fail(function () {
+            alert('Something wrong happened... try later');
+        })
+        .always(function () { });
+    }
+
     $('#devis-page .collection-item').click(function (e) {
         currentDevisId = $(this).attr('data-id');
+
+        if ($(e.target).closest('.delete-devis').length > 0) {
+            deleteDevis($(this), currentDevisId);
+            return false;
+        }
+        else if ($(e.target).closest('.switch').length > 0) {
+            processDevis(currentDevisId, $(e.target).siblings('.activate').prop('checked'), $(e.target).siblings('.activate'));
+            return false;
+        }
 
         $.ajax({
             method: "GET",
@@ -30,7 +80,7 @@ $(document).ready(function () {
                 $('#phoneNumber').html('<i class="material-icons" style="vertical-align: middle;">phone</i>&nbsp;&nbsp;' + data.devis.phoneNumber);
                 $('#fromCompany').html(data.devis.fromCompany);
 
-                if(data.devis.userId && data.devis.userId > 0) {
+                if (data.devis.userId && data.devis.userId > 0) {
                     $('#createUser').hide();
                 }
                 else {
@@ -65,7 +115,7 @@ $(document).ready(function () {
                 }
                 if (data.devis.zone != null && data.devis.zone != "") {
                     $('#eventData').show();
-                    $('#eventZipcodeZone').html('<i class="material-icons" style="vertical-align: middle;">map</i>&nbsp;&nbsp;<b>Zone</b> ' + data.devis.zone + " ; <b>Code postal :</b> " + data.devis.zipcode);
+                    $('#eventZipcodeZone').html('<i class="material-icons" style="vertical-align: middle;">map</i>&nbsp;&nbsp;<b>Zone</b> ' + data.devis.zone + " ; <b>Code postal :</b> " + data.devis.eventZipcode);
                 } else {
                     $('#eventData').hide();
                 }

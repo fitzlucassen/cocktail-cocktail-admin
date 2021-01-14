@@ -28,7 +28,7 @@
 		$Config->setHOST("localhost");					    // database host
 		$Config->setUSER("root");					        // user name
 		$Config->setPWD("");						        // password
-		$Config->setPATH("C:/Users/Thibault/Documents/perso/cocktail-cocktail-admin/Data/");			// The path where entities and repositories will be created
+		$Config->setPATH("C:/Users/famil/Documents/thibault/projects/cocktail-cocktail-admin/Data/");			// The path where entities and repositories will be created
 		
 		// If there is some links into your tables, you have to precise these right here.
 		// 
